@@ -17,7 +17,7 @@ import { Sidebar } from "components/sidebar/Sidebar";
 import React, { useState } from "react";
 import "firebase/firestore";
 
-export const AddSensorContent = () => {
+export const AddSensorContentPage = () => {
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [state, setState] = React.useState({
@@ -32,20 +32,9 @@ export const AddSensorContent = () => {
     });
   };
   return (
-    <Grid container sx={{ display: "flex" }}>
-      <Grid item md={2}>
-        <Sidebar />
-      </Grid>
-
-      <Grid
-        item
-        xs={12}
-        md={9.9}
-        sx={{
-          mt: 7,
-        }}
-      >
-        <Box sx={{ mt: 4 }}>
+    <div style={{ display: "flex", margin: "20px" }}>
+      <Sidebar />
+      <div style={{ flexGrow: 1, marginTop: "72px" }}>
           <Card>
             <CardContent>
               <TextField
@@ -127,8 +116,7 @@ export const AddSensorContent = () => {
               Add Sensor
             </Button>
           </Grid>
-        </Box>
-      </Grid>
-    </Grid>
+        </div>
+      </div>
   );
 };

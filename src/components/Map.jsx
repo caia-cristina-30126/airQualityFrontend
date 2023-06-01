@@ -99,9 +99,9 @@ const SimpleMap = () => {
     fetchAQI(sensorUUID);
   }; */
   return (
-    <div>
+    <div style={{ display: "flex" }}>
       <Sidebar />
-
+      <div style={{ flexGrow: 1}}>
       <GoogleMap
         zoom={10}
         center={center}
@@ -190,6 +190,7 @@ const SimpleMap = () => {
           </InfoWindow>
         )}
       </GoogleMap>
+    </div>
     </div>
   );
 };

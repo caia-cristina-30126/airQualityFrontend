@@ -44,13 +44,13 @@ export const Sidebar = () => {
   };
   const [anchorEl, setAnchorEl] = React.useState();
 
-  const handleMenu = (event) => {
+  /*   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+ */
   const navigate = useNavigate();
 
   const handleAccountButton = () => {
@@ -61,22 +61,30 @@ export const Sidebar = () => {
     navigate("/map");
   };
   const handleSensorsListButton = () => {
-    navigate("/sensorsTable");
+    navigate("/sensors");
   };
   const handleSensorsAddButton = () => {
     navigate("/addSensor");
   };
 
   const drawer = (
-    <div>
+    <>
       {/* <Toolbar /> */}
       <Divider />
       <Typography textAlign={"center"} variant="h5" fontWeight={"bold"}>
         AQI
       </Typography>
       <Divider />
-      <List>
-        <Grid container sx={{ display: "flex", flexDirection: "column" }}>
+
+      <Grid
+        container
+        sx={{
+          display: "flex",
+          flexFlow: "column wrap",
+          justifyContent: "space-between",
+        }}
+      >
+        <Grid item>
           <SidebarSectionBox sx={{ mx: 1 }}>
             <ListItem
               disablePadding
@@ -140,8 +148,9 @@ export const Sidebar = () => {
               </List>
             </Collapse>
           </SidebarSectionBox>
-
-          <SidebarSectionBox sx={{ mx: 1, mt: "150%" }}>
+        </Grid>
+        <Grid item>
+          <SidebarSectionBox sx={{ mx: 1 }}>
             <ListItemButton onClick={handleOpenAccountSection}>
               <ListItemIcon>
                 <PinDropIcon sx={{ color: "white" }} />
@@ -184,8 +193,8 @@ export const Sidebar = () => {
             </Grid>
           </SidebarSectionBox>
         </Grid>
-      </List>
-    </div>
+      </Grid>
+    </>
   );
 
   return (

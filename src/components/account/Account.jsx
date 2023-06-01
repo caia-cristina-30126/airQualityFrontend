@@ -1,9 +1,9 @@
-import { Box, Divider, Grid, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Divider, Tab, Tabs, Typography } from "@mui/material";
 import { useState } from "react";
 import { AccountGeneralSettings } from "./AccountGeneralSettings";
 import { Sidebar } from "components/sidebar/Sidebar";
 
-export const Account = (props) => {
+export const Account = () => {
   const tabs = [
     { label: "General", value: "general" },
     { label: "Permissions", value: "permissions" },
@@ -11,24 +11,14 @@ export const Account = (props) => {
 
   const [currentTab, setCurrentTab] = useState("general");
 
-  const handleTabsChange = (event, value) => {
+  const handleTabsChange = (value) => {
     setCurrentTab(value);
   };
 
   return (
-    <Grid container sx={{ display: "flex" }}>
-      <Grid item md={2.2}>
-        <Sidebar />
-      </Grid>
-
-      <Grid
-        item
-        xs={12}
-        md={8}
-        sx={{
-          mt: 9,
-        }}
-      >
+    <div style={{ display: "flex", margin: "20px" }}>
+      <Sidebar />
+      <div style={{ flexGrow: 1, marginTop: "72px" }}>
         <Box
           component="main"
           sx={{
@@ -53,7 +43,7 @@ export const Account = (props) => {
           <Divider sx={{ mb: 3 }} />
           {currentTab === "general" && <AccountGeneralSettings />}
         </Box>
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 };
