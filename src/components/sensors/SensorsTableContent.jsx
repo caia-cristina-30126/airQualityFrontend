@@ -6,6 +6,7 @@ import { DeleteSensorDialog } from "./DeleteSensorDialog";
 import MaterialTable from "material-table";
 import { useNavigate } from "react-router-dom";
 import { FirstPage, LastPage, ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { Typography } from "@mui/material";
 
 
 export const SensorsTableContent = () => {
@@ -59,11 +60,13 @@ const handleRowClick = (event, rowData) =>{
     <div style={{ display: "flex", margin: "20px" }}>
       <Sidebar />
       <div style={{ flexGrow: 1, marginTop: "72px" }}>
+        <Typography variant='h3' sx={{mb:2}}>Sensors</Typography>
+        <Typography variant='h6' sx={{mb:2}}>Select a sensor to show related data</Typography>
         <ThemeProvider theme={defaultMaterialTheme}>
           <MaterialTable
             columns={columns}
             data={sensors}
-            title="Sensors"
+            title=''
            icons={{
               FirstPage: FirstPage,
               LastPage: LastPage,

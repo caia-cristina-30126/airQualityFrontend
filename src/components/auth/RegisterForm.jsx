@@ -1,74 +1,94 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "components/firebaseConfig";
 import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { DivContentBody } from "styledComponentsAPI/Component";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid email format").required("Required"),
+      password: Yup.string()
+        .required("Required")
+        .min(6, "Password must be at least 6 characters"),
+    }),
+    onSubmit: async (values) => {
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          values.email,
+          values.password
+        );
         const user = userCredential.user;
         console.log(user);
-        navigate("/login");
-        // ...
-      })
-      .catch((error) => {
+        navigate("/signup");
+      } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
-        // ..
-      });
-  };
+      }
+    },
+  });
+
 
   return (
     <DivContentBody>
       <Paper
         elevation={16}
-        sx={{ padding: 3, minHeight: 300, minWidth: 600, borderRadius: 5 }}
+        sx={{ padding: 3, minHeight: 400, minWidth: 600, borderRadius: 5 }}
       >
-        <Typography variant="h4" sx={{ mb: 2 }}>
+        <Typography variant="h4" sx={{ mb: 5 }}>
           Register
         </Typography>
-        <form>
-          <Grid display="flex" flexDirection="column" rowGap={3}>
+        <form onSubmit={formik.handleSubmit}>
+          <Grid display="flex" flexDirection="column" rowGap={4}>
             <TextField
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               required
               placeholder="Email address"
               label="Email address"
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+              InputLabelProps={{ shrink: true }}
             />
             <TextField
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               required
               placeholder="Password"
               label="Password"
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+              InputLabelProps={{ shrink: true }}
             />
             <Button
               fullWidth
               type="submit"
               variant="contained"
-              onClick={onSubmit}
+              disabled={formik.isSubmitting}
               sx={{ height: 50 }}
             >
               Sign up
             </Button>
           </Grid>
         </form>
-        <Typography sx={{ mt: 2 }} variant="h5" textAlign={"center"}>
+        <Typography sx={{ mt: 5 }} variant="h5" textAlign={"center"}>
           Already have an account?
         </Typography>
         <Typography textAlign={"center"} variant="h6">

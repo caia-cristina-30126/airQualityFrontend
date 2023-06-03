@@ -7,6 +7,7 @@ import RegisterForm from "components/auth/RegisterForm";
 import { Account } from "components/account/Account";
 import { AddSensorContentPage } from "components/sensors/AddSensorContentPage";
 import { SensorDetailsPage } from "components/sensors/SensorDetailsPage";
+import ForgotPasswordForm from "components/auth/ForgotPasswordForm";
 
 export const App = () => {
   return (
@@ -14,6 +15,7 @@ export const App = () => {
       <Routes>
         <Route path="/signin" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
+        <Route path="/forgotPassword" element={<ForgotPasswordForm />} />
         <Route path="/account" element={<Account />} />
 
         <Route path="/map" element={<Map />} />
