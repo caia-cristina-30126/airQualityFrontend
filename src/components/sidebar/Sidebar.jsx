@@ -24,7 +24,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { SidebarSectionBox } from "styledComponentsAPI/Component";
 import { LogoutDialog } from "components/LogoutDialog";
 
-const drawerWidth = 245;
+const drawerWidth = 300;
 
 export const Sidebar = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -71,6 +71,7 @@ export const Sidebar = () => {
     <>
       {/* <Toolbar /> */}
       <Divider />
+      <Grid>{/*   <img src ={logoAQI} alt="logoAQI" /> */}</Grid>
       <Typography textAlign={"center"} variant="h5" fontWeight={"bold"}>
         AQI
       </Typography>
@@ -85,7 +86,7 @@ export const Sidebar = () => {
         }}
       >
         <Grid item>
-          <SidebarSectionBox sx={{ mx: 1 }}>
+          <SidebarSectionBox sx={{ mx: 2, mt: 5 }}>
             <ListItem
               disablePadding
               sx={{
@@ -103,7 +104,7 @@ export const Sidebar = () => {
               </ListItemButton>
             </ListItem>
           </SidebarSectionBox>
-          <SidebarSectionBox sx={{ mx: 1, my: 2 }}>
+          <SidebarSectionBox sx={{ mx: 2, my: 3 }}>
             <ListItemButton onClick={handleOpenSection}>
               <ListItemIcon>
                 <PinDropIcon sx={{ color: "white" }} />
@@ -150,7 +151,7 @@ export const Sidebar = () => {
           </SidebarSectionBox>
         </Grid>
         <Grid item>
-          <SidebarSectionBox sx={{ mx: 1 }}>
+          <SidebarSectionBox sx={{ mx: 2 }}>
             <ListItemButton onClick={handleOpenAccountSection}>
               <ListItemIcon>
                 <PinDropIcon sx={{ color: "white" }} />

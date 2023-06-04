@@ -16,7 +16,6 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
 
 export const ParentPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
-
   borderRadius: theme.spacing(1),
 }));
 

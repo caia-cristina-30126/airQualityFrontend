@@ -95,102 +95,99 @@ const SimpleMap = () => {
   const handleClick = (uuid) =>
     navigate(`/map/measurementsChart?sensorUUID=${uuid}`);
 
-  /* const createColor = (sensorUUID) => {
-    fetchAQI(sensorUUID);
-  }; */
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
-      <div style={{ flexGrow: 1}}>
-      <GoogleMap
-        zoom={10}
-        center={center}
-        mapContainerStyle={{ width: "100%", height: "100vh" }}
-        options={{ minZoom: 1 }}
-      >
-        {sensors.map((sensor) => (
-          <Marker
-            key={sensor.uuid}
-            position={{
-              lat: sensor.location.latitude,
-              lng: sensor.location.longitude,
-            }}
-            onClick={() => handleMarkerClick(sensor)}
-            icon={{
-              url: `data:image/svg+xml;charset=utf-8;base64,${btoa(
-                generateMarkerIcon("green")
-              )}`,
-              scaledSize: new window.google.maps.Size(32, 32),
-            }}
-          />
-        ))}
-        {activeMarker && (
-          <InfoWindow
-            position={{
-              lat: activeMarker.location.latitude,
-              lng: activeMarker.location.longitude,
-            }}
-            onCloseClick={handleInfoWindowClose}
-            options={{
-              pixelOffset: new window.google.maps.Size(0, -28),
-            }}
-          >
-            <Grid>
-              {activeMarker.active ? (
-                <>
-                  {/*                 {console.log("AQI FOR COLORRR:", aqi)}
-                   */}{" "}
-                  <RowDirectionFormGrid>
-                    <LocationOnOutlinedIcon />
-                    <Typography variant="subtitle1" fontWeight={"bold"}>
+      <div style={{ flexGrow: 1 }}>
+        <GoogleMap
+          zoom={10}
+          center={center}
+          mapContainerStyle={{ width: "100%", height: "100vh" }}
+          options={{ minZoom: 1 }}
+        >
+          {sensors.map((sensor) => (
+            <Marker
+              key={sensor.uuid}
+              position={{
+                lat: sensor.location.latitude,
+                lng: sensor.location.longitude,
+              }}
+              onClick={() => handleMarkerClick(sensor)}
+              icon={{
+                url: `data:image/svg+xml;charset=utf-8;base64,${btoa(
+                  generateMarkerIcon("green")
+                )}`,
+                scaledSize: new window.google.maps.Size(32, 32),
+              }}
+            />
+          ))}
+          {activeMarker && (
+            <InfoWindow
+              position={{
+                lat: activeMarker.location.latitude,
+                lng: activeMarker.location.longitude,
+              }}
+              onCloseClick={handleInfoWindowClose}
+              options={{
+                pixelOffset: new window.google.maps.Size(0, -28),
+              }}
+            >
+              <Grid>
+                {activeMarker.active ? (
+                  <>
+                    {/*                 {console.log("AQI FOR COLORRR:", aqi)}
+                     */}{" "}
+                    <RowDirectionFormGrid>
+                      <LocationOnOutlinedIcon />
+                      <Typography variant="subtitle1" fontWeight={"bold"}>
+                        {activeMarker.name}
+                      </Typography>
+                    </RowDirectionFormGrid>
+                    <AirIndexQuality
+                      sensorUUID={activeMarker.uuid}
+                      measurementType={"temp"}
+                    />
+                    <CategoryTypography>
+                      Pollutant concentration
+                    </CategoryTypography>
+                    <RowDirectionFormGrid>
+                      {pollutants.map((pollutant) => (
+                        <LastMeasurement
+                          sensorUUID={activeMarker.uuid}
+                          measurementType={pollutant}
+                        />
+                      ))}
+                    </RowDirectionFormGrid>
+                    <CategoryTypography>Weather data</CategoryTypography>
+                    <RowDirectionFormGrid>
+                      {weatherData.map((weather) => (
+                        <LastMeasurement
+                          sensorUUID={activeMarker.uuid}
+                          measurementType={weather}
+                        />
+                      ))}
+                    </RowDirectionFormGrid>
+                    <Button
+                      sx={{ my: 1 }}
+                      variant="contained"
+                      onClick={() => handleClick(activeMarker.uuid)}
+                    >
+                      See charts for this sensor
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Typography variant="subtitle1">
                       {activeMarker.name}
                     </Typography>
-                  </RowDirectionFormGrid>
-                  <AirIndexQuality
-                    sensorUUID={activeMarker.uuid}
-                    measurementType={"temp"}
-                  />
-                  <CategoryTypography>
-                    Pollutant concentration
-                  </CategoryTypography>
-                  <RowDirectionFormGrid>
-                    {pollutants.map((pollutant) => (
-                      <LastMeasurement
-                        sensorUUID={activeMarker.uuid}
-                        measurementType={pollutant}
-                      />
-                    ))}
-                  </RowDirectionFormGrid>
-                  <CategoryTypography>Weather data</CategoryTypography>
-                  <RowDirectionFormGrid>
-                    {weatherData.map((weather) => (
-                      <LastMeasurement
-                        sensorUUID={activeMarker.uuid}
-                        measurementType={weather}
-                      />
-                    ))}
-                  </RowDirectionFormGrid>
-                  <Button
-                    sx={{ my: 1 }}
-                    variant="contained"
-                    onClick={() => handleClick(activeMarker.uuid)}
-                  >
-                    See charts for this sensor
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Typography variant="subtitle1">
-                    {activeMarker.name}
-                  </Typography>
-                  <Typography>This sensor is inactive</Typography>
-                </>
-              )}
-            </Grid>
-          </InfoWindow>
-        )}
-      </GoogleMap>
-    </div>
+                    <Typography>This sensor is inactive</Typography>
+                  </>
+                )}
+              </Grid>
+            </InfoWindow>
+          )}
+        </GoogleMap>
+      </div>
     </div>
   );
 };

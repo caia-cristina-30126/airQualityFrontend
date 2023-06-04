@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import { SeverityPill } from "icons/severity-pill";
 
 export const AirIndexQuality = (props) => {
-  const [timestamp, setTimestamp] = useState(null);
+  const [timestamp, setTimestamp] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [aqi, setAqi] = useState(null);
   const [feedback, setFeedback] = useState("");
@@ -41,11 +41,10 @@ export const AirIndexQuality = (props) => {
           },
         })
         .then((response) => {
+          console.log(response.data);
           setTimestamp(response.data.instantTime.seconds);
-          setIsLoading(false);
         })
         .catch((error) => {
-          alert(error);
           setIsLoading(false);
         });
     };
