@@ -74,7 +74,7 @@ export const AddSensorContentPage = () => {
           New sensor
         </Typography>
         <Container maxWidth="xl">
-          <Card elevation={5}>
+          <Card>
             <CardContent>
               <Formik
                 initialValues={{

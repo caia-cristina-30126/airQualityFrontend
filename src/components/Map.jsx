@@ -6,11 +6,20 @@ import {
   InfoWindow,
 } from "@react-google-maps/api";
 import axios from "axios";
-import { Button, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  Grid,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { generateMarkerIcon } from "util/generateMarkerIcon";
 import {
   RowDirectionFormGrid,
   CategoryTypography,
+  SpaceBetweenGrid,
 } from "styledComponentsAPI/Component";
 import { LastMeasurement } from "./measurements/LastMeasurement";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
@@ -19,7 +28,7 @@ import { AirIndexQuality } from "./AirIndexQuality";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 import { Sidebar } from "./sidebar/Sidebar";
-
+import CircleIcon from "@mui/icons-material/Circle";
 export const Map = () => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyDXxIwkofQAFceNtxC1sA0DuSFAY01neeA",
@@ -30,12 +39,12 @@ export const Map = () => {
 };
 
 const SimpleMap = () => {
-  const center = useMemo(() => ({ lat: 46.757949, lng: 23.591042 }), []); //performs the calc once the dep changes.
+  const center = useMemo(() => ({ lat: 46.757949, lng: 23.591042 }), []);
   //Calculate the value once => reuse it everytime it rerenders
   const [sensors, setSensors] = useState([]);
   const [activeMarker, setActiveMarker] = useState(null);
   // const [aqi, setAqi] = useState(null);
-
+  const [loading, isLoading] = useState(true);
   const handleMarkerClick = (marker) => {
     setActiveMarker(marker);
   };
@@ -80,8 +89,10 @@ const SimpleMap = () => {
           "http://localhost:8080/api/sensor/list"
         );
         setSensors(response.data);
+        isLoading(false);
       } catch (error) {
         console.error("Error retrieving sensors:", error);
+        isLoading(false);
       }
     };
 
@@ -121,71 +132,157 @@ const SimpleMap = () => {
               }}
             />
           ))}
-          {activeMarker && (
-            <InfoWindow
-              position={{
-                lat: activeMarker.location.latitude,
-                lng: activeMarker.location.longitude,
-              }}
-              onCloseClick={handleInfoWindowClose}
-              options={{
-                pixelOffset: new window.google.maps.Size(0, -28),
-              }}
-            >
-              <Grid>
-                {activeMarker.active ? (
-                  <>
-                    {/*                 {console.log("AQI FOR COLORRR:", aqi)}
-                     */}{" "}
-                    <RowDirectionFormGrid>
-                      <LocationOnOutlinedIcon />
-                      <Typography variant="subtitle1" fontWeight={"bold"}>
+          {loading ? (
+            <CircularProgress size={60} />
+          ) : (
+            <>
+              {activeMarker && (
+                <InfoWindow
+                  position={{
+                    lat: activeMarker.location.latitude,
+                    lng: activeMarker.location.longitude,
+                  }}
+                  onCloseClick={handleInfoWindowClose}
+                  options={{
+                    pixelOffset: new window.google.maps.Size(0, -28),
+                  }}
+                >
+                  {activeMarker.active ? (
+                    <>
+                      <Grid
+                        sx={{
+                          minWidth: "250px",
+                          minHeight: "350px",
+                        }}
+                      >
+                        <RowDirectionFormGrid>
+                          <LocationOnOutlinedIcon fontSize="large" />
+                          <Typography
+                            variant="h5"
+                            fontWeight={"bold"}
+                            sx={{ alignSelf: "center", ml: 2 }}
+                          >
+                            {activeMarker.name}
+                          </Typography>
+                        </RowDirectionFormGrid>
+                        <AirIndexQuality
+                          sensorUUID={activeMarker.uuid}
+                          measurementType={"temp"}
+                        />
+                        <Divider sx={{ mb: 3 }} />
+                        <CategoryTypography variant="h6">
+                          Pollutant concentration
+                        </CategoryTypography>
+                        <RowDirectionFormGrid>
+                          {pollutants.map((pollutant) => (
+                            <LastMeasurement
+                              sensorUUID={activeMarker.uuid}
+                              measurementType={pollutant}
+                              usage={"pollutant"}
+                            />
+                          ))}
+                        </RowDirectionFormGrid>
+                        <CategoryTypography variant="h6">
+                          Weather data
+                        </CategoryTypography>
+                        <RowDirectionFormGrid>
+                          {weatherData.map((weather) => (
+                            <LastMeasurement
+                              sensorUUID={activeMarker.uuid}
+                              measurementType={weather}
+                              usage={"weather"}
+                            />
+                          ))}
+                        </RowDirectionFormGrid>
+                        <Grid
+                          sx={{ display: "flex", justifyContent: "center" }}
+                        >
+                          <Button
+                            sx={{ my: 1, height: 40, textTransform: "none" }}
+                            variant="contained"
+                            onClick={() => handleClick(activeMarker.uuid)}
+                          >
+                            See charts for this sensor
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </>
+                  ) : (
+                    <Grid
+                      sx={{
+                        padding: 1,
+                      }}
+                    >
+                      <Typography variant="subtitle1">
                         {activeMarker.name}
                       </Typography>
-                    </RowDirectionFormGrid>
-                    <AirIndexQuality
-                      sensorUUID={activeMarker.uuid}
-                      measurementType={"temp"}
-                    />
-                    <CategoryTypography>
-                      Pollutant concentration
-                    </CategoryTypography>
-                    <RowDirectionFormGrid>
-                      {pollutants.map((pollutant) => (
-                        <LastMeasurement
-                          sensorUUID={activeMarker.uuid}
-                          measurementType={pollutant}
-                        />
-                      ))}
-                    </RowDirectionFormGrid>
-                    <CategoryTypography>Weather data</CategoryTypography>
-                    <RowDirectionFormGrid>
-                      {weatherData.map((weather) => (
-                        <LastMeasurement
-                          sensorUUID={activeMarker.uuid}
-                          measurementType={weather}
-                        />
-                      ))}
-                    </RowDirectionFormGrid>
-                    <Button
-                      sx={{ my: 1 }}
-                      variant="contained"
-                      onClick={() => handleClick(activeMarker.uuid)}
-                    >
-                      See charts for this sensor
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Typography variant="subtitle1">
-                      {activeMarker.name}
-                    </Typography>
-                    <Typography>This sensor is inactive</Typography>
-                  </>
-                )}
-              </Grid>
-            </InfoWindow>
+                      <Typography>This sensor is inactive</Typography>
+                    </Grid>
+                  )}
+                </InfoWindow>
+              )}
+            </>
           )}
+          <Box
+            position="absolute"
+            top={10}
+            right={10}
+            padding={1}
+            component={Paper}
+            elevation={3}
+            bgcolor="rgba(255, 255, 255, 0.8)"
+          >
+            <Typography fontSize={20} fontWeight={"bold"} textAlign={"center"}>
+              Legend
+            </Typography>
+            <Grid sx={{ display: "flex", flexDirection: "column" }}>
+              <Grid
+                sx={{ display: "flex", flexDirection: "row", columnGap: 2 }}
+              >
+                <CircleIcon style={{ color: "#50f0e6" }} />
+                <Typography textAlign={"center"}>good</Typography>
+              </Grid>
+              <Grid
+                sx={{ display: "flex", flexDirection: "row", columnGap: 2 }}
+              >
+                <CircleIcon style={{ color: "#50ccaa" }} />
+                <Typography textAlign={"center"}>fair</Typography>
+              </Grid>
+              <Grid
+                sx={{ display: "flex", flexDirection: "row", columnGap: 2 }}
+              >
+                <CircleIcon style={{ color: "#f0e641" }} />
+                <Typography textAlign={"center"}>moderate</Typography>
+              </Grid>
+              <Grid
+                sx={{ display: "flex", flexDirection: "row", columnGap: 2 }}
+              >
+                <CircleIcon style={{ color: "#ff5050" }} />
+                <Typography textAlign={"center"}>poor</Typography>
+              </Grid>
+
+              <Grid
+                sx={{ display: "flex", flexDirection: "row", columnGap: 2 }}
+              >
+                <CircleIcon style={{ color: "#960032" }} />
+                <Typography textAlign={"center"}>very poor</Typography>
+              </Grid>
+              <Grid
+                sx={{ display: "flex", flexDirection: "row", columnGap: 2 }}
+              >
+                <CircleIcon style={{ color: "#7d2181" }} />
+
+                <Typography textAlign={"center"}>extremely poor</Typography>
+              </Grid>
+              <Grid
+                sx={{ display: "flex", flexDirection: "row", columnGap: 2 }}
+              >
+                <CircleIcon style={{ color: "#6f6f6f" }} />
+
+                <Typography textAlign={"center"}>no data</Typography>
+              </Grid>
+            </Grid>
+          </Box>
         </GoogleMap>
       </div>
     </div>

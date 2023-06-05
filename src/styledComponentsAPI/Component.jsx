@@ -1,17 +1,20 @@
 import { Box, Grid, Paper, Typography, styled } from "@mui/material";
 
 export const RowDirectionFormGrid = styled(Grid)(({ theme }) => ({
+  padding: 1,
   display: "flex",
   flexDirection: "row",
   columnGap: theme.spacing(0.2),
   flexWrap: "wrap",
+  justifyContent: "center",
 }));
 
 export const StyledPaper = styled(Paper)(({ theme }) => ({
   borderRadius: theme.spacing(1),
   margin: theme.spacing(0.5),
-  padding: theme.spacing(1),
-  minWidth: theme.spacing(4),
+  padding: theme.spacing(0.7),
+  minWidth: theme.spacing(5),
+  minHeight: theme.spacing(5),
 }));
 
 export const ParentPaper = styled(Paper)(({ theme }) => ({
@@ -20,7 +23,7 @@ export const ParentPaper = styled(Paper)(({ theme }) => ({
 }));
 
 export const CategoryTypography = styled(Typography)(({ theme }) => ({
-  fontSize: 16,
+  fontSize: 20,
   textAlign: "center",
   marginTop: 1,
 }));

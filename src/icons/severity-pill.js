@@ -33,14 +33,15 @@ const SeverityPillRoot = styled("span")(({ theme, ownerState }) => {
     fontFamily: theme.typography.fontFamily,
     fontSize: theme.typography.pxToRem(12),
     lineHeight: 2,
-    fontWeight: 600,
+    fontWeight: 700,
     justifyContent: "center",
     letterSpacing: 0.5,
-    minWidth: 20,
+    // minWidth: 20,
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
     textTransform: "uppercase",
-    whiteSpace: "nowrap",
+    // whiteSpace: "nowrap",
+    minHeight: "40px",
   };
 });
 

@@ -12,7 +12,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MapIcon from "@mui/icons-material/Map";
 import PinDropIcon from "@mui/icons-material/PinDrop";
 import { Collapse, Grid } from "@mui/material";
@@ -24,7 +24,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { SidebarSectionBox } from "styledComponentsAPI/Component";
 import { LogoutDialog } from "components/LogoutDialog";
 
-const drawerWidth = 300;
+const drawerWidth = 250;
 
 export const Sidebar = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -72,9 +72,18 @@ export const Sidebar = () => {
       {/* <Toolbar /> */}
       <Divider />
       <Grid>{/*   <img src ={logoAQI} alt="logoAQI" /> */}</Grid>
-      <Typography textAlign={"center"} variant="h5" fontWeight={"bold"}>
-        AQI
-      </Typography>
+      <Link to="/map" style={{ textDecoration: "none" }}>
+        <Typography
+          textAlign={"center"}
+          variant="h5"
+          fontWeight={"bold"}
+          color="white"
+          sx={{ mt: 3 }}
+        >
+          AQI
+        </Typography>
+      </Link>
+
       <Divider />
 
       <Grid
@@ -86,7 +95,7 @@ export const Sidebar = () => {
         }}
       >
         <Grid item>
-          <SidebarSectionBox sx={{ mx: 2, mt: 5 }}>
+          <SidebarSectionBox sx={{ mx: 2, mt: 3 }}>
             <ListItem
               disablePadding
               sx={{
@@ -104,7 +113,7 @@ export const Sidebar = () => {
               </ListItemButton>
             </ListItem>
           </SidebarSectionBox>
-          <SidebarSectionBox sx={{ mx: 2, my: 3 }}>
+          <SidebarSectionBox sx={{ mx: 2, my: 2 }}>
             <ListItemButton onClick={handleOpenSection}>
               <ListItemIcon>
                 <PinDropIcon sx={{ color: "white" }} />
@@ -278,7 +287,13 @@ export const Sidebar = () => {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
-              color: "#111827",
+            },
+          }}
+          PaperProps={{
+            sx: {
+              color: "white",
+              backgroundColor: "#111827",
+              borderRadius: 1,
             },
           }}
         >

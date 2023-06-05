@@ -17,7 +17,17 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
+
 import { SpaceBetweenGrid } from "styledComponentsAPI/Component";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useNavigate } from "react-router-dom";
 
 const UpdateSensorForm = ({ uuid }) => {
   const [sensorData, setSensorData] = React.useState(null);
@@ -33,6 +43,35 @@ const UpdateSensorForm = ({ uuid }) => {
     "humidity",
     "pressure",
   ];
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const navigate = useNavigate();
+  const handleDeleteSensor = async (uuid) => {
+    try {
+      const config = {
+        headers: {
+          UUID: uuid,
+        },
+      };
+
+      const response = await axios.delete(
+        "http://localhost:8080/api/deleteSensorByUUID",
+        config
+      );
+
+      console.log("Sensor deleted successfully:", response);
+      navigate("/sensors");
+    } catch (error) {
+      console.error("Error deleting sensor:", error);
+    }
+  };
+
   React.useEffect(() => {
     const fetchSensor = async () => {
       try {
@@ -50,10 +89,11 @@ const UpdateSensorForm = ({ uuid }) => {
 
     fetchSensor();
   }, [uuid]);
+
   if (!sensorData) {
     return <CircularProgress size={20} />;
   }
-  console.log(sensorData);
+  console.log("hey", sensorData);
   const handleSubmit = async (values) => {
     const { active, name, latitude, longitude, measurementsType } = values;
 
@@ -89,6 +129,7 @@ const UpdateSensorForm = ({ uuid }) => {
   const handleCloseSnackbar = () => {
     setSnackbar(false);
   };
+
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 3 }}>
@@ -263,8 +304,60 @@ const UpdateSensorForm = ({ uuid }) => {
               </Form>
             )}
           </Formik>
+          <Divider sx={{ mt: 2 }} variant="middle" />
+
+          <Grid item>
+            <SpaceBetweenGrid sx={{ mx: 3, mt: 2 }}>
+              <Grid container spacing={3}>
+                <Grid item md={4} xs={12}>
+                  <Typography variant="h6" sx={{ mt: 2, fontWeight: "bold" }}>
+                    Delete sensor
+                  </Typography>
+                </Grid>
+                <Grid
+                  item
+                  md={8}
+                  sm={12}
+                  xs={12}
+                  sx={{ alignSelf: "center", mt: 2 }}
+                >
+                  Delete this sensor and all of its data?
+                </Grid>
+              </Grid>
+              <Grid>
+                <Button
+                  onClick={handleClickOpen}
+                  color="error"
+                  type="submit"
+                  variant="contained"
+                  startIcon={<DeleteIcon />}
+                  sx={{ mt: 2 }}
+                >
+                  Delete
+                </Button>
+              </Grid>
+            </SpaceBetweenGrid>
+          </Grid>
         </CardContent>
       </Card>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Delete sensor {sensorData.sensorName}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this sensor?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button
+            onClick={() => handleDeleteSensor(sensorData.uuid)}
+            autoFocus
+            color="error"
+          >
+            Delete sensor
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Snackbar
         open={snackbar}
         message={snackbarFeedback}

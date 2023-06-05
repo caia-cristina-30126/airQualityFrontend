@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Grid } from "@mui/material";
+import { Typography } from "@mui/material";
 import {
   RowDirectionFormGrid,
   StyledPaper,
@@ -8,11 +8,11 @@ import {
 import CircularProgress from "@mui/material/CircularProgress";
 
 export const LastMeasurement = (props) => {
-  //  const [measurementType, setMeasurementType] = useState("");
   const [measurementValue, setMeasurementValue] = useState("");
   const [measurementUnit, setMeasurementUnit] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-
+  const [isNull, setIsNull] = useState(true);
+  const valuesArray = [];
   useEffect(() => {
     const fetchLastMeasurementByType = () => {
       axios
@@ -24,7 +24,8 @@ export const LastMeasurement = (props) => {
         })
         .then((response) => {
           console.log("pollutants caqi", response.data.value);
-          setMeasurementValue(processValue(response.data.value));
+          setMeasurementValue(response.data.value);
+          valuesArray.push(response.data.value);
           setMeasurementUnit(processUnit(response.data.unit));
           setIsLoading(false);
         })
@@ -37,31 +38,47 @@ export const LastMeasurement = (props) => {
     fetchLastMeasurementByType();
   }, []);
 
- 
   return (
-    <StyledPaper elevation={4}>
+    <>
       {isLoading ? (
-        <CircularProgress size={20} />
+        <CircularProgress size={40} />
       ) : (
         <>
-          <Grid>{props.measurementType}</Grid>
-          <RowDirectionFormGrid>
-            <Grid>{measurementValue}</Grid>
-            <Grid>{measurementUnit}</Grid>
-          </RowDirectionFormGrid>
+          {measurementValue && measurementUnit ? (
+            <>
+              <StyledPaper elevation={4} sx={{ backgroundColor: "#71DEF1" }}>
+                {isLoading ? (
+                  <CircularProgress size={40} />
+                ) : (
+                  <>
+                    <Typography
+                      fontWeight={"bold"}
+                      textAlign={"center"}
+                      fontSize={18}
+                    >
+                      {props.measurementType.toUpperCase()}
+                    </Typography>
+                    <RowDirectionFormGrid sx={{ columnGap: 1 }}>
+                      <Typography fontSize={20}>{measurementValue}</Typography>
+                      <Typography fontSize={16} sx={{ alignSelf: "end" }}>
+                        {measurementUnit}
+                      </Typography>
+                    </RowDirectionFormGrid>
+                  </>
+                )}
+              </StyledPaper>
+            </>
+          ) : (
+            <Typography>No data</Typography>
+          )}
         </>
       )}
-    </StyledPaper>
+    </>
   );
 };
 
-const processValue = (value) => {
-  if (!value) return "";
-  return value;
-};
-
 const processUnit = (unit) => {
-  if (!unit) return ".";
+  if (!unit) return;
   if (unit === "MICROGRAMS_PER_CUBIC_METER") unit = "µg/m³";
   if (unit === "PARTS_PER_BILLION") unit = "µg/m³";
   if (unit === "PERCENT") unit = "%";

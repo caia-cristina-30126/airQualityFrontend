@@ -54,21 +54,25 @@ export const AirIndexQuality = (props) => {
   }, []);
 
   return (
-    <Grid sx={{ p: 2 }}>
+    <Grid sx={{ p: 1 }}>
       {isLoading ? (
         <CircularProgress size={20} />
       ) : (
         <>
-          <Grid sx={{ m: 0.5 }}>
-            <SeverityPill color={feedback}> {feedback}</SeverityPill>
+          <Grid sx={{ display: "flex", justifyContent: "center", mb: 0.5 }}>
+            <SeverityPill color={feedback}> {feedback} </SeverityPill>
           </Grid>
 
-          <RowDirectionFormGrid>
-            <Typography sx={{ fontSize: 12, mr: 10 }} fontWeight={"bold"}>
+          <RowDirectionFormGrid sx={{ justifyContent: "space-between" }}>
+            <Typography
+              sx={{ fontSize: 14 }}
+              textAlign={"center"}
+              fontWeight={"bold"}
+            >
               {aqi}
             </Typography>
 
-            <Typography sx={{ fontSize: 12 }} fontWeight={"bold"}>
+            <Typography sx={{ fontSize: 14 }} fontWeight={"bold"}>
               {timestamp
                 ? format(new Date(timestamp * 1000), "d MMMM yyyy hh:mm aa")
                 : ""}
@@ -86,7 +90,9 @@ const processAQI = (aqiValue, aqiType) => {
     !isFinite(aqiValue) ||
     aqiType === ""
   ) {
-    return <Typography>Insufficient data</Typography>;
+    return (
+      <Typography variant="h6">Insufficient data for measuring AQI</Typography>
+    );
   } else {
     return (
       <>
@@ -122,5 +128,5 @@ const feedbackAQI = (value, type) => {
       }
     }
   }
-  return "Feedback cannot be proceeded";
+  return "No data";
 };

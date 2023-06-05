@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Sidebar } from "../sidebar/Sidebar";
-import { DeleteSensorDialog } from "./DeleteSensorDialog";
 import MaterialTable from "material-table";
 import { useNavigate } from "react-router-dom";
 import {
@@ -10,6 +9,9 @@ import {
   LastPage,
   ChevronLeft,
   ChevronRight,
+  Sort,
+  Search,
+  Clear,
 } from "@mui/icons-material";
 import { Button, CircularProgress, Container, Typography } from "@mui/material";
 import { SpaceBetweenGrid } from "styledComponentsAPI/Component";
@@ -55,15 +57,6 @@ export const SensorsTableContent = () => {
         return `${creationDate[0]}/${creationDate[1]}/${creationDate[2]}`;
       },
     },
-    {
-      title: "Delete",
-      field: "uuid",
-      sorting: false,
-      render: (rowData) => {
-        const { uuid, name } = rowData;
-        return <DeleteSensorDialog uuid={uuid} sensorName={name} />;
-      },
-    },
   ];
   const defaultMaterialTheme = createTheme();
 
@@ -102,6 +95,9 @@ export const SensorsTableContent = () => {
                     LastPage: LastPage,
                     PreviousPage: ChevronLeft,
                     NextPage: ChevronRight,
+                    SortArrow: Sort,
+                    Search: Search,
+                    ResetSearch: Clear,
                   }}
                   onRowClick={handleRowClick}
                   options={{
@@ -113,6 +109,7 @@ export const SensorsTableContent = () => {
                       backgroundColor: "#f7f7f7",
                     },
                     sorting: true,
+                    actionsColumnIndex: -1,
                   }}
                 />
               </ThemeProvider>
