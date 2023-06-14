@@ -5,6 +5,17 @@ import {
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption,
+} from "@reach/combobox";
 import axios from "axios";
 import {
   Box,
@@ -19,7 +30,6 @@ import { generateMarkerIcon } from "util/generateMarkerIcon";
 import {
   RowDirectionFormGrid,
   CategoryTypography,
-  SpaceBetweenGrid,
 } from "styledComponentsAPI/Component";
 import { LastMeasurement } from "./measurements/LastMeasurement";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
@@ -29,17 +39,20 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 import { Sidebar } from "./sidebar/Sidebar";
 import CircleIcon from "@mui/icons-material/Circle";
+
 export const Map = () => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyDXxIwkofQAFceNtxC1sA0DuSFAY01neeA",
+    libraries: ["places"],
   });
 
-  if (!isLoaded) return <div>Loading...</div>;
+  if (!isLoaded) return <CircularProgress size={20} />;
   return <SimpleMap />;
 };
 
 const SimpleMap = () => {
   const center = useMemo(() => ({ lat: 46.757949, lng: 23.591042 }), []);
+
   //Calculate the value once => reuse it everytime it rerenders
   const [sensors, setSensors] = useState([]);
   const [activeMarker, setActiveMarker] = useState(null);
@@ -48,6 +61,7 @@ const SimpleMap = () => {
   const handleMarkerClick = (marker) => {
     setActiveMarker(marker);
   };
+  const [itemSelected, setItemSelected] = useState(null);
 
   const handleInfoWindowClose = () => {
     setActiveMarker(null);
@@ -98,7 +112,7 @@ const SimpleMap = () => {
 
     fetchSensors();
   }, []);
-
+  const handleLegendClick = () => navigate("/legendExplanations");
   const pollutants = ["PM25", "PM10", "NO2", "O3", "SO2"];
   const weatherData = ["temp", "humidity", "pressure"];
 
@@ -112,10 +126,11 @@ const SimpleMap = () => {
       <div style={{ flexGrow: 1 }}>
         <GoogleMap
           zoom={10}
-          center={center}
+          center={itemSelected || center}
           mapContainerStyle={{ width: "100%", height: "100vh" }}
           options={{ minZoom: 1 }}
         >
+          {itemSelected && <Marker position={itemSelected} />}
           {sensors.map((sensor) => (
             <Marker
               key={sensor.uuid}
@@ -144,6 +159,7 @@ const SimpleMap = () => {
                   }}
                   onCloseClick={handleInfoWindowClose}
                   options={{
+                    // background: "blue",
                     pixelOffset: new window.google.maps.Size(0, -28),
                   }}
                 >
@@ -171,20 +187,17 @@ const SimpleMap = () => {
                         />
                         <Divider sx={{ mb: 3 }} />
                         <CategoryTypography variant="h6">
-                          Pollutant concentration
+                          Measurements data
                         </CategoryTypography>
                         <RowDirectionFormGrid>
                           {pollutants.map((pollutant) => (
                             <LastMeasurement
                               sensorUUID={activeMarker.uuid}
                               measurementType={pollutant}
-                              usage={"pollutant"}
                             />
                           ))}
                         </RowDirectionFormGrid>
-                        <CategoryTypography variant="h6">
-                          Weather data
-                        </CategoryTypography>
+
                         <RowDirectionFormGrid>
                           {weatherData.map((weather) => (
                             <LastMeasurement
@@ -200,6 +213,7 @@ const SimpleMap = () => {
                           <Button
                             sx={{ my: 1, height: 40, textTransform: "none" }}
                             variant="contained"
+                            color="success"
                             onClick={() => handleClick(activeMarker.uuid)}
                           >
                             See charts for this sensor
@@ -223,9 +237,12 @@ const SimpleMap = () => {
               )}
             </>
           )}
+
+          <AutocompletePlaces setItemSelected={setItemSelected} />
+
           <Box
             position="absolute"
-            top={10}
+            top={60}
             right={10}
             padding={1}
             component={Paper}
@@ -240,51 +257,127 @@ const SimpleMap = () => {
                 sx={{ display: "flex", flexDirection: "row", columnGap: 2 }}
               >
                 <CircleIcon style={{ color: "#50f0e6" }} />
-                <Typography textAlign={"center"}>good</Typography>
+                <Typography textAlign={"center"}>Good</Typography>
               </Grid>
               <Grid
                 sx={{ display: "flex", flexDirection: "row", columnGap: 2 }}
               >
                 <CircleIcon style={{ color: "#50ccaa" }} />
-                <Typography textAlign={"center"}>fair</Typography>
+                <Typography textAlign={"center"}>Fair</Typography>
               </Grid>
               <Grid
                 sx={{ display: "flex", flexDirection: "row", columnGap: 2 }}
               >
                 <CircleIcon style={{ color: "#f0e641" }} />
-                <Typography textAlign={"center"}>moderate</Typography>
+                <Typography textAlign={"center"}>Moderate</Typography>
               </Grid>
               <Grid
                 sx={{ display: "flex", flexDirection: "row", columnGap: 2 }}
               >
                 <CircleIcon style={{ color: "#ff5050" }} />
-                <Typography textAlign={"center"}>poor</Typography>
+                <Typography textAlign={"center"}>Poor</Typography>
               </Grid>
 
               <Grid
                 sx={{ display: "flex", flexDirection: "row", columnGap: 2 }}
               >
                 <CircleIcon style={{ color: "#960032" }} />
-                <Typography textAlign={"center"}>very poor</Typography>
+                <Typography textAlign={"center"}>Very poor</Typography>
               </Grid>
               <Grid
                 sx={{ display: "flex", flexDirection: "row", columnGap: 2 }}
               >
                 <CircleIcon style={{ color: "#7d2181" }} />
 
-                <Typography textAlign={"center"}>extremely poor</Typography>
+                <Typography textAlign={"center"}>Extremely poor</Typography>
               </Grid>
               <Grid
                 sx={{ display: "flex", flexDirection: "row", columnGap: 2 }}
               >
                 <CircleIcon style={{ color: "#6f6f6f" }} />
 
-                <Typography textAlign={"center"}>no data</Typography>
+                <Typography textAlign={"center"}>No data</Typography>
               </Grid>
+            </Grid>
+            <Grid sx={{ display: "flex", justifyContent: "center" }}>
+              <Button
+                variant="contained"
+                color="success"
+                onClick={handleLegendClick}
+                size="small"
+                sx={{ textTransform: "none", my: 0.5 }}
+              >
+                Explanations
+              </Button>
             </Grid>
           </Box>
         </GoogleMap>
       </div>
     </div>
+  );
+};
+
+const AutocompletePlaces = ({ setItemSelected }) => {
+  const {
+    ready,
+    value,
+    setValue,
+    suggestions: { status, data },
+    clearSuggestions,
+  } = usePlacesAutocomplete();
+
+  const optionStyles = {
+    padding: "8px 12px",
+    cursor: "pointer",
+  };
+  const handleSelect = async (address) => {
+    setValue(address, false);
+    clearSuggestions();
+
+    const results = await getGeocode({ address });
+    const { lat, lng } = await getLatLng(results[0]);
+    setItemSelected({ lat, lng });
+  };
+  const markerDelete = () => {
+    setValue(""); // Clear the input field
+    setItemSelected(null); // Disable the marker
+  };
+  return (
+    <Box
+      position="absolute"
+      top={10}
+      right={550}
+      padding={1}
+      component={Paper}
+      elevation={3}
+      bgcolor="rgba(255, 255, 255, 0.8)"
+    >
+      <Combobox onSelect={handleSelect}>
+        <ComboboxInput
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          disabled={!ready}
+          placeholder="Search an address"
+          style={{ height: "30px", minWidth: "200px" }}
+        />
+        {value && (
+          <button onClick={markerDelete} style={{ marginLeft: "10px" }}>
+            Clear
+          </button>
+        )}
+        <ComboboxPopover>
+          <ComboboxList style={{ backgroundColor: "white" }}>
+            {status === "OK" &&
+              data.map(({ place_id, description }) => (
+                <ComboboxOption
+                  key={place_id}
+                  value={description}
+                  style={optionStyles}
+                />
+              ))}
+          </ComboboxList>
+        </ComboboxPopover>
+      </Combobox>
+    </Box>
   );
 };

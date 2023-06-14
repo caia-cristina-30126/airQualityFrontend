@@ -13,6 +13,7 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import background from "./background.jpg";
 
 const ForgotPasswordForm = () => {
   const [snackbar, setSnackbar] = useState(false);
@@ -57,7 +58,11 @@ const ForgotPasswordForm = () => {
   };
 
   return (
-    <DivContentBody>
+    <DivContentBody
+      style={{
+        backgroundImage: `url(${background})`,
+      }}
+    >
       <Paper
         elevation={16}
         sx={{ padding: 3, minHeight: 300, minWidth: 600, borderRadius: 5 }}

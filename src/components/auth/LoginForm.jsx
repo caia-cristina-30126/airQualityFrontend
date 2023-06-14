@@ -6,6 +6,7 @@ import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { DivContentBody } from "styledComponentsAPI/Component";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import background from "./background.jpg";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -48,7 +49,11 @@ const LoginForm = () => {
   });
 
   return (
-    <DivContentBody>
+    <DivContentBody
+      style={{
+        backgroundImage: `url(${background})`,
+      }}
+    >
       <Paper
         elevation={16}
         sx={{ padding: 3, minHeight: 400, minWidth: 600, borderRadius: 5 }}
@@ -109,11 +114,11 @@ const LoginForm = () => {
         <Typography sx={{ mt: 5 }} variant="h5" textAlign={"center"}>
           No account yet?
         </Typography>
-        <Typography textAlign={"center"}  variant="h6">
+        <Typography textAlign={"center"} variant="h6">
           <NavLink to="/register">Sign up</NavLink>
         </Typography>
-      
-        <Typography textAlign={"center"} sx={{mt:2}} variant="h5">
+
+        <Typography textAlign={"center"} sx={{ mt: 2 }} variant="h5">
           <NavLink to="/forgotPassword">Forgot password</NavLink>
         </Typography>
       </Paper>

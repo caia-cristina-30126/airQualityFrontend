@@ -23,6 +23,7 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AddIcon from "@mui/icons-material/Add";
 import { SidebarSectionBox } from "styledComponentsAPI/Component";
 import { LogoutDialog } from "components/LogoutDialog";
+import logoAQI from "./logoAQI.png";
 
 const drawerWidth = 250;
 
@@ -72,18 +73,21 @@ export const Sidebar = () => {
       {/* <Toolbar /> */}
       <Divider />
       <Grid>{/*   <img src ={logoAQI} alt="logoAQI" /> */}</Grid>
+
       <Link to="/map" style={{ textDecoration: "none" }}>
         <Typography
           textAlign={"center"}
           variant="h5"
           fontWeight={"bold"}
           color="white"
-          sx={{ mt: 3 }}
         >
-          AQI
+          <img
+            src={logoAQI}
+            alt="logoAQI"
+            style={{ width: "150px", height: "150px" }}
+          />
         </Typography>
       </Link>
-
       <Divider />
 
       <Grid
@@ -95,7 +99,7 @@ export const Sidebar = () => {
         }}
       >
         <Grid item>
-          <SidebarSectionBox sx={{ mx: 2, mt: 3 }}>
+          <SidebarSectionBox sx={{ mx: 2 }}>
             <ListItem
               disablePadding
               sx={{

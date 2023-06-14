@@ -6,6 +6,7 @@ import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { DivContentBody } from "styledComponentsAPI/Component";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import background from "./background.jpg";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -39,9 +40,12 @@ const RegisterForm = () => {
     },
   });
 
-
   return (
-    <DivContentBody>
+    <DivContentBody
+      style={{
+        backgroundImage: `url(${background})`,
+      }}
+    >
       <Paper
         elevation={16}
         sx={{ padding: 3, minHeight: 400, minWidth: 600, borderRadius: 5 }}

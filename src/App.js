@@ -11,6 +11,7 @@ import ForgotPasswordForm from "components/auth/ForgotPasswordForm";
 import { makeStyles } from "@mui/styles";
 import { CssBaseline } from "@mui/material";
 import React from "react";
+import { LegendExplanations } from "components/legend/LegendExplanations";
 
 const styleColor = makeStyles(() => ({
   root: {
@@ -41,6 +42,7 @@ export const App = () => {
         <Route path="/forgotPassword" element={<ForgotPasswordForm />} />
         <Route path="/account" element={<Account />} />
         <Route path="/map" element={<Map />} />
+        <Route path="/legendExplanations" element={<LegendExplanations />} />
         <Route
           path={`map/measurementsChart`}
           element={<SensorMeasurementsCharts />}
