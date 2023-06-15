@@ -39,6 +39,7 @@ export const App = () => {
         <Route path="/signin" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/forgotPassword" element={<ForgotPasswordForm />} />
+
         <Route path="/account" element={<Account />} />
         <Route path="/map" element={<Map />} />
         <Route path="/legendExplanations" element={<LegendExplanations />} />

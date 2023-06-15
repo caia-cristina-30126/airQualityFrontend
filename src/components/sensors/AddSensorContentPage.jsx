@@ -20,6 +20,8 @@ import axios from "axios";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { SpaceBetweenGrid } from "styledComponentsAPI/Component";
+import { auth } from "components/firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
 
 export const AddSensorContentPage = () => {
   const [snackbar, setSnackbar] = React.useState(false);
@@ -34,28 +36,57 @@ export const AddSensorContentPage = () => {
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/api/createSensor",
-        values
-      );
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const tokenFromLocalStorage = localStorage.getItem("accessToken");
+        const token = tokenFromLocalStorage.substring(
+          1,
+          tokenFromLocalStorage.length - 1
+        );
+        const fetchSensors = async () => {
+          try {
+            axios.interceptors.request.use(function (config) {
+              const token = localStorage.getItem("accessToken");
+              if (token !== undefined) {
+                config.headers.Authorization = token;
+              }
+              return config;
+            });
+            const response = await axios.post(
+              "http://localhost:8080/api/createSensor",
+              values,
+              {
+                headers: {
+                  idToken: token,
+                },
+              }
+            );
 
-      if (response.status === 200) {
-        setsnackbarFeedback("Sensor created successfully!");
-        setSnackbar(true);
+            if (response.status === 200) {
+              setsnackbarFeedback("Sensor created successfully!");
+              setSnackbar(true);
+            } else {
+              setsnackbarFeedback("Error creating sensor");
+              setSnackbar(true);
+            }
+
+            console.log(response.data);
+            resetForm();
+          } catch (error) {
+            console.error(error);
+          } finally {
+            setSubmitting(false);
+          }
+        };
+        fetchSensors();
       } else {
-        setsnackbarFeedback("Error creating sensor");
+        console.log("not authenticated");
+        setsnackbarFeedback("User is not authenticated!");
         setSnackbar(true);
       }
-
-      console.log(response.data);
-      resetForm();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setSubmitting(false);
-    }
+    });
   };
+
   const handleCloseSnackbar = () => {
     setSnackbar(false);
   };
