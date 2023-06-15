@@ -12,6 +12,7 @@ export const AccountGeneralSettings = (props) => {
         // User is signed in
         user.getIdTokenResult().then((idTokenResult) => {
           setEmail(idTokenResult.claims.email);
+          console.log("token here", idTokenResult.token);
         });
       } else {
         console.log("User is signed out");

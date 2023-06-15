@@ -95,7 +95,6 @@ const SimpleMap = () => {
           if (token !== undefined) {
             config.headers.Authorization = token;
           }
-
           return config;
         });
 

@@ -26,7 +26,6 @@ export const App = () => {
   const styleClass = styleColor();
   const navigate = useNavigate();
   const location = useLocation();
-
   React.useEffect(() => {
     if (location.pathname === "/") {
       navigate("/signin");
