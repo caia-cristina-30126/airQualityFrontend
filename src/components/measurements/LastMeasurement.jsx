@@ -11,7 +11,6 @@ export const LastMeasurement = (props) => {
   const [measurementValue, setMeasurementValue] = useState("");
   const [measurementUnit, setMeasurementUnit] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [isDefined, setIsDefined] = useState(false);
   const valuesArray = [];
   useEffect(() => {
     const fetchLastMeasurementByType = () => {
@@ -47,18 +46,18 @@ export const LastMeasurement = (props) => {
         <>
           {measurementValue && measurementUnit ? (
             <>
-              <StyledPaper elevation={4} sx={{ backgroundColor: "#71DEF1" }}>
+              <StyledPaper elevation={4} sx={{ backgroundColor: "#15aefa" }}>
                 <>
                   <Typography
                     fontWeight={"bold"}
                     textAlign={"center"}
-                    fontSize={18}
+                    fontSize={16}
                   >
                     {props.measurementType.toUpperCase()}
                   </Typography>
                   <RowDirectionFormGrid sx={{ columnGap: 1 }}>
-                    <Typography fontSize={20}>{measurementValue}</Typography>
-                    <Typography fontSize={16} sx={{ alignSelf: "end" }}>
+                    <Typography fontSize={17}>{measurementValue}</Typography>
+                    <Typography fontSize={14} sx={{ alignSelf: "end" }}>
                       {measurementUnit}
                     </Typography>
                   </RowDirectionFormGrid>
@@ -80,5 +79,6 @@ const processUnit = (unit) => {
   if (unit === "PARTS_PER_BILLION") unit = "µg/m³";
   if (unit === "PERCENT") unit = "%";
   if (unit === "CELSIUS_DEGREE") unit = "°C";
+  if (unit === "HECTOPASCALS") unit = "hPa";
   return unit;
 };

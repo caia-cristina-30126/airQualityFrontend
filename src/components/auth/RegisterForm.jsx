@@ -51,7 +51,6 @@ const RegisterForm = () => {
         );
         const user = userCredential.user;
         const email = userCredential.user.email;
-
         console.log(user);
         console.log(email);
         axios

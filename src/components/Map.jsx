@@ -32,7 +32,6 @@ import {
   CategoryTypography,
 } from "styledComponentsAPI/Component";
 import { LastMeasurement } from "./measurements/LastMeasurement";
-import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import { useNavigate } from "react-router-dom";
 import { AirIndexQuality } from "./AirIndexQuality";
 import { onAuthStateChanged } from "firebase/auth";
@@ -40,7 +39,7 @@ import { auth } from "./firebaseConfig";
 import { Sidebar } from "./sidebar/Sidebar";
 import CircleIcon from "@mui/icons-material/Circle";
 import NotAuthneticatedUser from "./NotAuthenticatedUser";
-
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 export const Map = () => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyDXxIwkofQAFceNtxC1sA0DuSFAY01neeA",
@@ -105,7 +104,8 @@ const SimpleMap = () => {
     });
   }, []);
   const handleLegendClick = () => navigate("/legendExplanations");
-  const pollutants = ["PM25", "PM10", "NO2", "O3", "SO2"];
+  const pollutants = ["PM25", "PM10"];
+  const airlyData = ["NO2", "O3", "SO2"];
   const weatherData = ["temp", "humidity", "pressure"];
   const navigate = useNavigate();
   const handleClick = (uuid) =>
@@ -167,72 +167,77 @@ const SimpleMap = () => {
                     }}
                     onCloseClick={handleInfoWindowClose}
                     options={{
-                      // background: "blue",
                       pixelOffset: new window.google.maps.Size(0, -28),
                     }}
                   >
                     {activeMarker.active ? (
-                      <>
-                        <Grid
-                          sx={{
-                            minWidth: "250px",
-                            minHeight: "350px",
-                          }}
-                        >
-                          <RowDirectionFormGrid>
-                            <LocationOnOutlinedIcon fontSize="large" />
-                            <Typography
-                              variant="h5"
-                              fontWeight={"bold"}
-                              sx={{ alignSelf: "center", ml: 2 }}
-                            >
-                              {activeMarker.name}
-                            </Typography>
-                          </RowDirectionFormGrid>
-                          <AirIndexQuality
-                            sensorUUID={activeMarker.uuid}
-                            measurementType={"temp"}
+                      <Grid>
+                        <RowDirectionFormGrid sx={{ justifyContent: "start" }}>
+                          <LocationOnIcon
+                            fontSize="medium"
+                            sx={{ color: "#0387f3", mt: 0.5 }}
                           />
-                          <Divider sx={{ mb: 3 }} />
-                          <CategoryTypography variant="h6">
-                            Measurements data
-                          </CategoryTypography>
-                          <RowDirectionFormGrid>
-                            {pollutants.map((pollutant) => (
-                              <LastMeasurement
-                                sensorUUID={activeMarker.uuid}
-                                measurementType={pollutant}
-                              />
-                            ))}
-                          </RowDirectionFormGrid>
-
-                          <RowDirectionFormGrid>
-                            {weatherData.map((weather) => (
-                              <LastMeasurement
-                                sensorUUID={activeMarker.uuid}
-                                measurementType={weather}
-                                usage={"weather"}
-                              />
-                            ))}
-                          </RowDirectionFormGrid>
-                          <Grid
-                            sx={{ display: "flex", justifyContent: "center" }}
+                          <Typography
+                            variant="h6"
+                            fontWeight={"bold"}
+                            sx={{ alignSelf: "center" }}
                           >
-                            <Button
-                              sx={{
-                                my: 1,
-                                height: 40,
-                                textTransform: "none",
-                              }}
-                              variant="contained"
-                              color="success"
-                              onClick={() => handleClick(activeMarker.uuid)}
-                            >
-                              See charts for this sensor
-                            </Button>
-                          </Grid>
+                            {activeMarker.name}
+                          </Typography>
+                        </RowDirectionFormGrid>
+                        <AirIndexQuality
+                          sensorUUID={activeMarker.uuid}
+                          measurementType={"temp"}
+                        />
+                        <Divider />
+                        <CategoryTypography variant="h6" sx={{ my: 1 }}>
+                          Measurements data
+                        </CategoryTypography>
+                        <RowDirectionFormGrid>
+                          {pollutants.map((pollutant) => (
+                            <LastMeasurement
+                              sensorUUID={activeMarker.uuid}
+                              measurementType={pollutant}
+                            />
+                          ))}
+                        </RowDirectionFormGrid>
+                        <RowDirectionFormGrid>
+                          {airlyData.map((data) => (
+                            <LastMeasurement
+                              sensorUUID={activeMarker.uuid}
+                              measurementType={data}
+                            />
+                          ))}
+                        </RowDirectionFormGrid>
+                        <RowDirectionFormGrid>
+                          {weatherData.map((weather) => (
+                            <LastMeasurement
+                              sensorUUID={activeMarker.uuid}
+                              measurementType={weather}
+                              usage={"weather"}
+                            />
+                          ))}
+                        </RowDirectionFormGrid>
+                        <Grid
+                          sx={{ display: "flex", justifyContent: "center" }}
+                        >
+                          <Button
+                            sx={{
+                              my: 1,
+                              mt: 2,
+                              height: 40,
+                              textTransform: "none",
+                              backgroundColor: "#66d751",
+                              fontWeight: "bold",
+                            }}
+                            variant="contained"
+                            color="success"
+                            onClick={() => handleClick(activeMarker.uuid)}
+                          >
+                            See charts for this sensor
+                          </Button>
                         </Grid>
-                      </>
+                      </Grid>
                     ) : (
                       <Grid
                         sx={{

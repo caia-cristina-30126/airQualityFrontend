@@ -11,7 +11,7 @@ export const SensorDetailsPage = (props) => {
   return (
     <div style={{ display: "flex", margin: "20px" }}>
       <Sidebar />
-      <div style={{ flexGrow: 1, marginTop: "72px" }}>
+      <div style={{ flexGrow: 1, marginTop: "40px" }}>
         <UpdateSensorForm uuid={sensorUUID} />
       </div>
     </div>

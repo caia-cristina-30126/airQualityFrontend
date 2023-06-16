@@ -28,6 +28,7 @@ import {
 import { SpaceBetweenGrid } from "styledComponentsAPI/Component";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
+import { UpdateForm } from "util/UpdateForm";
 
 const UpdateSensorForm = ({ uuid }) => {
   const [sensorData, setSensorData] = React.useState(null);
@@ -93,7 +94,7 @@ const UpdateSensorForm = ({ uuid }) => {
   if (!sensorData) {
     return <CircularProgress size={20} />;
   }
-  console.log("hey", sensorData);
+
   const handleSubmit = async (values) => {
     const { active, name, latitude, longitude, measurementsType } = values;
 
@@ -135,7 +136,7 @@ const UpdateSensorForm = ({ uuid }) => {
       <Typography variant="h4" sx={{ mb: 3 }}>
         {sensorData.name} details
       </Typography>
-      <Card sx={{ p: 2 }}>
+      <Card sx={{ p: 2, backgroundColor: "#f5f5f0" }}>
         <CardContent>
           <Formik
             initialValues={{
@@ -151,12 +152,9 @@ const UpdateSensorForm = ({ uuid }) => {
           >
             {({ values, handleChange }) => (
               <Form>
-                <Grid
-                  container
-                  spacing={2}
-                  sx={{ display: "flex", flexFlow: "column" }}
-                >
-                  <Grid item>
+                <UpdateForm
+                  title="Basic details"
+                  content={
                     <Field
                       as={TextField}
                       label="Name"
@@ -164,36 +162,45 @@ const UpdateSensorForm = ({ uuid }) => {
                       value={values.name}
                       onChange={handleChange}
                       fullWidth
+                      sx={{ my: 2 }}
+                      InputLabelProps={{ shrink: true }}
                     />
-                  </Grid>
-
-                  <Grid item>
-                    {/*   <Grid sx={{display:'flex', flexDirection:'row', columnGap:5, }}>
-        <Typography variant="h6">Latitude: {sensorData.location.latitude}</Typography>
-        <Typography variant="h6">Longitude: {sensorData.location.longitude}</Typography>
-        </Grid> */}
-                    <Field
-                      as={TextField}
-                      label="Latitude"
-                      name="latitude"
-                      type="number"
-                      value={values.location.latitude}
-                      disabled
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item>
-                    <Field
-                      as={TextField}
-                      label="Longitude"
-                      name="longitude"
-                      type="number"
-                      value={values.location.longitude}
-                      disabled
-                      fullWidth
-                    />
-                  </Grid>
-                  <Divider sx={{ mt: 2 }} variant="middle" />
+                  }
+                />
+                <Divider sx={{ mt: 2, mb: 2 }} />
+                <UpdateForm
+                  title="Location"
+                  content={
+                    <>
+                      <Field
+                        as={TextField}
+                        label="Latitude"
+                        name="latitude"
+                        type="number"
+                        value={values.location.latitude}
+                        disabled
+                        fullWidth
+                        sx={{ my: 2 }}
+                      />
+                      <Field
+                        as={TextField}
+                        label="Longitude"
+                        name="longitude"
+                        type="number"
+                        value={values.location.longitude}
+                        disabled
+                        fullWidth
+                        sx={{ my: 2 }}
+                      />
+                    </>
+                  }
+                />
+                <Grid
+                  container
+                  spacing={2}
+                  sx={{ display: "flex", flexFlow: "column" }}
+                >
+                  <Divider sx={{ mt: 4 }} />
                   <Grid item>
                     <SpaceBetweenGrid sx={{ mx: 3 }}>
                       <Grid container spacing={3}>
@@ -223,11 +230,12 @@ const UpdateSensorForm = ({ uuid }) => {
                           name="active"
                           checked={values.active}
                           onChange={handleChange}
+                          color="success"
                         />
                       </Grid>
                     </SpaceBetweenGrid>
                   </Grid>
-                  <Divider sx={{ mt: 2 }} variant="middle" />
+                  <Divider sx={{ mt: 2 }} />
                   <Grid item>
                     <Typography
                       variant="h6"
@@ -262,6 +270,7 @@ const UpdateSensorForm = ({ uuid }) => {
                                   checked={values.measurementsType.includes(
                                     type
                                   )}
+                                  color="error"
                                   onChange={(event) => {
                                     const isChecked = event.target.checked;
                                     const typeIndex =
@@ -283,18 +292,23 @@ const UpdateSensorForm = ({ uuid }) => {
                       )}
                     </FieldArray>
                   </Grid>
+                  <Divider sx={{ mt: 3 }} />
                   <Grid item xs={12}>
                     <Grid
                       sx={{
                         display: "flex",
                         justifyContent: "center",
-                        mt: 2,
+                        mt: 1,
                       }}
                     >
                       <Button
                         type="submit"
                         variant="contained"
-                        sx={{ height: 50, mt: 5 }}
+                        sx={{
+                          height: 50,
+                          backgroundColor: "#0384f3",
+                          fontWeight: "bold",
+                        }}
                       >
                         Update sensor
                       </Button>
@@ -304,7 +318,7 @@ const UpdateSensorForm = ({ uuid }) => {
               </Form>
             )}
           </Formik>
-          <Divider sx={{ mt: 2 }} variant="middle" />
+          <Divider sx={{ mt: 2 }} />
 
           <Grid item>
             <SpaceBetweenGrid sx={{ mx: 3, mt: 2 }}>

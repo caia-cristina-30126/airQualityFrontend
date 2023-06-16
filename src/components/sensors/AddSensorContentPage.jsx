@@ -94,7 +94,7 @@ export const AddSensorContentPage = () => {
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
-      <div style={{ flexGrow: 1, marginTop: "72px" }}>
+      <div style={{ flexGrow: 1, marginTop: "50px", marginBottom: "20px" }}>
         <CssBaseline />
         <Typography
           variant="h4"
@@ -105,7 +105,7 @@ export const AddSensorContentPage = () => {
           New sensor
         </Typography>
         <Container maxWidth="xl">
-          <Card>
+          <Card sx={{ p: 2, backgroundColor: "#f5f5f0" }}>
             <CardContent>
               <Formik
                 initialValues={{
@@ -194,6 +194,7 @@ export const AddSensorContentPage = () => {
                               as={Checkbox}
                               type="checkbox"
                               name="active"
+                              color="success"
                             />
                           </Grid>
                         </SpaceBetweenGrid>
@@ -231,6 +232,7 @@ export const AddSensorContentPage = () => {
                                 type="checkbox"
                                 value="PM25"
                                 as={Switch}
+                                color="error"
                               />
                             }
                             label="PM 2.5"
@@ -244,6 +246,7 @@ export const AddSensorContentPage = () => {
                                 type="checkbox"
                                 value="PM10"
                                 as={Switch}
+                                color="error"
                               />
                             }
                             label="PM 10"
@@ -257,6 +260,7 @@ export const AddSensorContentPage = () => {
                                 type="checkbox"
                                 value="NO2"
                                 as={Switch}
+                                color="error"
                               />
                             }
                             label="NO2"
@@ -269,6 +273,7 @@ export const AddSensorContentPage = () => {
                                 type="checkbox"
                                 value="O3"
                                 as={Switch}
+                                color="error"
                               />
                             }
                             label="O3"
@@ -282,6 +287,7 @@ export const AddSensorContentPage = () => {
                                 type="checkbox"
                                 value="SO2"
                                 as={Switch}
+                                color="error"
                               />
                             }
                             label="SO2"
@@ -295,6 +301,7 @@ export const AddSensorContentPage = () => {
                                 type="checkbox"
                                 value="temp"
                                 as={Switch}
+                                color="error"
                               />
                             }
                             label="Temperature"
@@ -308,6 +315,7 @@ export const AddSensorContentPage = () => {
                                 type="checkbox"
                                 value="humidity"
                                 as={Switch}
+                                color="error"
                               />
                             }
                             label="Humidity"
@@ -321,6 +329,7 @@ export const AddSensorContentPage = () => {
                                 type="checkbox"
                                 value="pressure"
                                 as={Switch}
+                                color="error"
                               />
                             }
                             label="Pressure"
@@ -341,7 +350,11 @@ export const AddSensorContentPage = () => {
                             type="submit"
                             disabled={isSubmitting}
                             variant="contained"
-                            sx={{ height: 50 }}
+                            sx={{
+                              height: 50,
+                              backgroundColor: "#65d652",
+                              fontWeight: "bold",
+                            }}
                           >
                             Add Sensor
                           </Button>

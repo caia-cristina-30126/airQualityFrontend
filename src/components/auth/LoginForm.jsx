@@ -28,6 +28,7 @@ const LoginForm = () => {
           userCredential.user.getIdToken().then((token) => {
             localStorage.setItem("accessToken", JSON.stringify(token));
           });
+          localStorage.setItem("email", userCredential.user.email);
           navigate("/map");
           console.log("user", user);
         })

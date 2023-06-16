@@ -112,7 +112,7 @@ export const SensorsTableContent = () => {
       ) : sensors && sensors.length > 0 ? (
         <div style={{ display: "flex" }}>
           <Sidebar />
-          <div style={{ flexGrow: 1, marginTop: "72px" }}>
+          <div style={{ flexGrow: 1, marginTop: "50px" }}>
             <Container maxWidth="xl">
               {isLoading ? (
                 <CircularProgress size={50} />
@@ -124,7 +124,11 @@ export const SensorsTableContent = () => {
                     </Typography>
                     <Button
                       variant="contained"
-                      sx={{ height: 50 }}
+                      sx={{
+                        height: 50,
+                        backgroundColor: "#65d652",
+                        fontWeight: "bold",
+                      }}
                       onClick={handleAddSensorClick}
                       size="small"
                     >

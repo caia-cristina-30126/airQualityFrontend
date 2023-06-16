@@ -59,9 +59,11 @@ export const AirIndexQuality = (props) => {
         <CircularProgress size={20} />
       ) : (
         <>
-          <Grid sx={{ display: "flex", justifyContent: "center", mb: 0.5 }}>
+          <RowDirectionFormGrid
+            sx={{ display: "flex", justifyContent: "center", mb: 0.5 }}
+          >
             <SeverityPill color={feedback}> {feedback} </SeverityPill>
-          </Grid>
+          </RowDirectionFormGrid>
 
           <RowDirectionFormGrid sx={{ justifyContent: "space-between" }}>
             <Typography

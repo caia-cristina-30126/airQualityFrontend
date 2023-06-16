@@ -18,13 +18,12 @@ export const Account = () => {
   return (
     <div style={{ display: "flex", margin: "20px" }}>
       <Sidebar />
-      <div style={{ flexGrow: 1, marginTop: "72px" }}>
+      <div style={{ flexGrow: 1, marginTop: "30px" }}>
         <Container maxWidth="xl">
           <Box
             component="main"
             sx={{
               flexGrow: 1,
-              py: 5,
             }}
           >
             <Typography variant="h4">Account</Typography>
@@ -35,7 +34,7 @@ export const Account = () => {
               textColor="primary"
               value={currentTab}
               variant="scrollable"
-              sx={{ mt: 3 }}
+              sx={{ mt: 2 }}
             >
               {tabs.map((tab) => (
                 <Tab key={tab.value} label={tab.label} value={tab.value} />

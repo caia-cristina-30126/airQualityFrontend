@@ -11,14 +11,14 @@ import ForgotPasswordForm from "components/auth/ForgotPasswordForm";
 import { makeStyles } from "@mui/styles";
 import { CssBaseline } from "@mui/material";
 import React from "react";
-import { LegendExplanations } from "components/legend/LegendExplanations";
+import { LegendExplained } from "components/legend/LegendExplained";
 
 const styleColor = makeStyles(() => ({
   root: {
     display: "flex",
     flexDirection: "column",
     minHeight: "100vh",
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#cde2ff",
   },
 }));
 
@@ -42,7 +42,7 @@ export const App = () => {
 
         <Route path="/account" element={<Account />} />
         <Route path="/map" element={<Map />} />
-        <Route path="/legendExplanations" element={<LegendExplanations />} />
+        <Route path="/legendExplanations" element={<LegendExplained />} />
         <Route
           path={`map/measurementsChart`}
           element={<SensorMeasurementsCharts />}

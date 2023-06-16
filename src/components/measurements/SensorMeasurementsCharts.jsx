@@ -57,7 +57,7 @@ export const SensorMeasurementsCharts = (props) => {
           };
 
           const response = await axios.get(
-            "http://localhost:8080/api/sensor/measurement/lastWeek",
+            "http://localhost:8080/api/sensor/measurement/lastHoursMeasurements",
             configHeader
           );
 
@@ -111,8 +111,8 @@ export const SensorMeasurementsCharts = (props) => {
 
     chart: {
       type: chartType,
-      width: 400,
-      height: 220,
+      width: 340,
+      height: 200,
       borderRadius: 5,
     },
 
@@ -185,7 +185,7 @@ export const SensorMeasurementsCharts = (props) => {
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
-      <div style={{ flexGrow: 1, marginTop: "72px" }}>
+      <div style={{ flexGrow: 1, marginTop: "40px" }}>
         <Typography
           variant="h4"
           fontWeight={"bold"}
@@ -200,186 +200,213 @@ export const SensorMeasurementsCharts = (props) => {
               <CircularProgress size={20} />
             ) : (
               <>
-                <Grid container spacing={5}>
-                  <Grid item>
-                    <ParentPaper>
-                      <SpaceBetweenGrid marginBottom={1}>
-                        <KPITitleTypography>PM2.5</KPITitleTypography>
-                        <TypographyHealthKitAndDate>
-                          Pollutant concentration
-                        </TypographyHealthKitAndDate>
-                      </SpaceBetweenGrid>
-                      <SpaceBetweenGrid marginBottom={1}>
-                        <KPITypography color={"blue"}>Daily</KPITypography>
-                        <TypographyHealthKitAndDate></TypographyHealthKitAndDate>
-                      </SpaceBetweenGrid>
-                      <HighchartsReact
-                        highcharts={Highcharts}
-                        options={chartOptions(
-                          pm25Values.reverse(),
-                          "#abe496",
-                          "line",
-                          pollutantsUnit
-                        )}
-                      />
-                    </ParentPaper>
+                <Grid container spacing={3}>
+                  <Grid
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      columnGap: 4,
+                      mx: 25,
+                    }}
+                  >
+                    <Grid item>
+                      <ParentPaper>
+                        <SpaceBetweenGrid marginBottom={1}>
+                          <KPITitleTypography>PM2.5</KPITitleTypography>
+                          <TypographyHealthKitAndDate>
+                            Pollutant concentration
+                          </TypographyHealthKitAndDate>
+                        </SpaceBetweenGrid>
+                        <SpaceBetweenGrid marginBottom={1}>
+                          <KPITypography color={"blue"}>Hourly</KPITypography>
+                          <TypographyHealthKitAndDate></TypographyHealthKitAndDate>
+                        </SpaceBetweenGrid>
+                        <HighchartsReact
+                          highcharts={Highcharts}
+                          options={chartOptions(
+                            pm25Values.reverse(),
+                            "#8a011f",
+                            "line",
+                            pollutantsUnit
+                          )}
+                        />
+                      </ParentPaper>
+                    </Grid>
+                    <Grid item>
+                      <ParentPaper>
+                        <SpaceBetweenGrid marginBottom={1}>
+                          <KPITitleTypography>PM10</KPITitleTypography>
+                          <TypographyHealthKitAndDate>
+                            Pollutant concentration
+                          </TypographyHealthKitAndDate>
+                        </SpaceBetweenGrid>
+                        <SpaceBetweenGrid marginBottom={1}>
+                          <KPITypography color={"blue"}>Hourly</KPITypography>
+                          <TypographyHealthKitAndDate></TypographyHealthKitAndDate>
+                        </SpaceBetweenGrid>
+                        <HighchartsReact
+                          highcharts={Highcharts}
+                          options={chartOptions(
+                            pm10Values.reverse(),
+                            "#8a011f",
+                            "line",
+                            pollutantsUnit
+                          )}
+                        />
+                      </ParentPaper>
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <ParentPaper>
-                      <SpaceBetweenGrid marginBottom={1}>
-                        <KPITitleTypography>PM10</KPITitleTypography>
-                        <TypographyHealthKitAndDate>
-                          Pollutant concentration
-                        </TypographyHealthKitAndDate>
-                      </SpaceBetweenGrid>
-                      <SpaceBetweenGrid marginBottom={1}>
-                        <KPITypography color={"blue"}>Daily</KPITypography>
-                        <TypographyHealthKitAndDate></TypographyHealthKitAndDate>
-                      </SpaceBetweenGrid>
-                      <HighchartsReact
-                        highcharts={Highcharts}
-                        options={chartOptions(
-                          pm10Values.reverse(),
-                          "#abe496",
-                          "line",
-                          pollutantsUnit
-                        )}
-                      />
-                    </ParentPaper>
+                  <Grid
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      columnGap: 4,
+                      mt: 3,
+                    }}
+                  >
+                    <Grid item>
+                      <ParentPaper>
+                        <SpaceBetweenGrid marginBottom={1}>
+                          <KPITitleTypography>NO2</KPITitleTypography>
+                          <TypographyHealthKitAndDate>
+                            Pollutant concentration
+                          </TypographyHealthKitAndDate>
+                        </SpaceBetweenGrid>
+                        <SpaceBetweenGrid marginBottom={1}>
+                          <KPITypography color={"blue"}>Hourly</KPITypography>
+                          <TypographyHealthKitAndDate></TypographyHealthKitAndDate>
+                        </SpaceBetweenGrid>
+                        <HighchartsReact
+                          highcharts={Highcharts}
+                          options={chartOptions(
+                            no2Values.reverse(),
+                            "#66d751",
+                            "line",
+                            pollutantsUnit
+                          )}
+                        />
+                      </ParentPaper>
+                    </Grid>
+                    <Grid item>
+                      <ParentPaper>
+                        <SpaceBetweenGrid marginBottom={1}>
+                          <KPITitleTypography>O3</KPITitleTypography>
+                          <TypographyHealthKitAndDate>
+                            Pollutant concentration
+                          </TypographyHealthKitAndDate>
+                        </SpaceBetweenGrid>
+                        <SpaceBetweenGrid marginBottom={1}>
+                          <KPITypography color={"blue"}>Hourly</KPITypography>
+                          <TypographyHealthKitAndDate></TypographyHealthKitAndDate>
+                        </SpaceBetweenGrid>
+                        <HighchartsReact
+                          highcharts={Highcharts}
+                          options={chartOptions(
+                            o3Values.reverse(),
+                            "#66d751",
+                            "line",
+                            pollutantsUnit
+                          )}
+                        />
+                      </ParentPaper>
+                    </Grid>
+                    <Grid item>
+                      <ParentPaper>
+                        <SpaceBetweenGrid marginBottom={1}>
+                          <KPITitleTypography>SO2</KPITitleTypography>
+                          <TypographyHealthKitAndDate>
+                            Pollutant concentration
+                          </TypographyHealthKitAndDate>
+                        </SpaceBetweenGrid>
+                        <SpaceBetweenGrid marginBottom={1}>
+                          <KPITypography color={"blue"}>Hourly</KPITypography>
+                        </SpaceBetweenGrid>
+                        <HighchartsReact
+                          highcharts={Highcharts}
+                          options={chartOptions(
+                            so2Values.reverse(),
+                            "#66d751",
+                            "line",
+                            pollutantsUnit
+                          )}
+                        />
+                      </ParentPaper>
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <ParentPaper>
-                      <SpaceBetweenGrid marginBottom={1}>
-                        <KPITitleTypography>NO2</KPITitleTypography>
-                        <TypographyHealthKitAndDate>
-                          Pollutant concentration
-                        </TypographyHealthKitAndDate>
-                      </SpaceBetweenGrid>
-                      <SpaceBetweenGrid marginBottom={1}>
-                        <KPITypography color={"blue"}>Daily</KPITypography>
-                        <TypographyHealthKitAndDate></TypographyHealthKitAndDate>
-                      </SpaceBetweenGrid>
-                      <HighchartsReact
-                        highcharts={Highcharts}
-                        options={chartOptions(
-                          no2Values.reverse(),
-                          "#abe496",
-                          "line",
-                          pollutantsUnit
-                        )}
-                      />
-                    </ParentPaper>
-                  </Grid>
-                  <Grid item>
-                    <ParentPaper>
-                      <SpaceBetweenGrid marginBottom={1}>
-                        <KPITitleTypography>O3</KPITitleTypography>
-                        <TypographyHealthKitAndDate>
-                          Pollutant concentration
-                        </TypographyHealthKitAndDate>
-                      </SpaceBetweenGrid>
-                      <SpaceBetweenGrid marginBottom={1}>
-                        <KPITypography color={"blue"}>Daily</KPITypography>
-                        <TypographyHealthKitAndDate></TypographyHealthKitAndDate>
-                      </SpaceBetweenGrid>
-                      <HighchartsReact
-                        highcharts={Highcharts}
-                        options={chartOptions(
-                          o3Values.reverse(),
-                          "#abe496",
-                          "line",
-                          pollutantsUnit
-                        )}
-                      />
-                    </ParentPaper>
-                  </Grid>
-                  <Grid item>
-                    <ParentPaper>
-                      <SpaceBetweenGrid marginBottom={1}>
-                        <KPITitleTypography>SO2</KPITitleTypography>
-                        <TypographyHealthKitAndDate>
-                          Pollutant concentration
-                        </TypographyHealthKitAndDate>
-                      </SpaceBetweenGrid>
-                      <SpaceBetweenGrid marginBottom={1}>
-                        <KPITypography color={"blue"}>Daily</KPITypography>
-                      </SpaceBetweenGrid>
-                      <HighchartsReact
-                        highcharts={Highcharts}
-                        options={chartOptions(
-                          so2Values.reverse(),
-                          "#abe496",
-                          "line",
-                          pollutantsUnit
-                        )}
-                      />
-                    </ParentPaper>
-                  </Grid>
-                  <Grid item>
-                    <ParentPaper>
-                      <SpaceBetweenGrid marginBottom={1}>
-                        <KPITitleTypography>Temperature</KPITitleTypography>
-                        <TypographyHealthKitAndDate>
-                          Weather data
-                        </TypographyHealthKitAndDate>
-                      </SpaceBetweenGrid>
-                      <SpaceBetweenGrid marginBottom={1}>
-                        <KPITypography color={"blue"}>Daily</KPITypography>
-                      </SpaceBetweenGrid>
-                      <HighchartsReact
-                        highcharts={Highcharts}
-                        options={chartOptions(
-                          tempValues.reverse(),
-                          "#abe496",
-                          "column",
-                          "°C"
-                        )}
-                      />
-                    </ParentPaper>
-                  </Grid>
-                  <Grid item>
-                    <ParentPaper>
-                      <SpaceBetweenGrid marginBottom={1}>
-                        <KPITitleTypography>Pressure</KPITitleTypography>
-                        <TypographyHealthKitAndDate>
-                          Weather data
-                        </TypographyHealthKitAndDate>
-                      </SpaceBetweenGrid>
-                      <SpaceBetweenGrid marginBottom={1}>
-                        <KPITypography color={"blue"}>Daily</KPITypography>
-                      </SpaceBetweenGrid>
-                      <HighchartsReact
-                        highcharts={Highcharts}
-                        options={chartOptions(
-                          pressureValues.reverse(),
-                          "#abe496",
-                          "column",
-                          "hPa"
-                        )}
-                      />
-                    </ParentPaper>
-                  </Grid>
-                  <Grid item>
-                    <ParentPaper>
-                      <SpaceBetweenGrid marginBottom={1}>
-                        <KPITitleTypography>Humidity</KPITitleTypography>
-                        <TypographyHealthKitAndDate>
-                          Weather data
-                        </TypographyHealthKitAndDate>
-                      </SpaceBetweenGrid>
-                      <SpaceBetweenGrid marginBottom={1}>
-                        <KPITypography color={"blue"}>Daily</KPITypography>
-                      </SpaceBetweenGrid>
-                      <HighchartsReact
-                        highcharts={Highcharts}
-                        options={chartOptions(
-                          humidityValues.reverse(),
-                          "#abe496",
-                          "column",
-                          "%"
-                        )}
-                      />
-                    </ParentPaper>
+                  <Grid
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      columnGap: 4,
+                      mt: 3,
+                    }}
+                  >
+                    <Grid item>
+                      <ParentPaper>
+                        <SpaceBetweenGrid marginBottom={1}>
+                          <KPITitleTypography>Temperature</KPITitleTypography>
+                          <TypographyHealthKitAndDate>
+                            Weather data
+                          </TypographyHealthKitAndDate>
+                        </SpaceBetweenGrid>
+                        <SpaceBetweenGrid marginBottom={1}>
+                          <KPITypography color={"blue"}>Hourly</KPITypography>
+                        </SpaceBetweenGrid>
+                        <HighchartsReact
+                          highcharts={Highcharts}
+                          options={chartOptions(
+                            tempValues.reverse(),
+                            "#13aaf8",
+                            "column",
+                            "°C"
+                          )}
+                        />
+                      </ParentPaper>
+                    </Grid>
+                    <Grid item>
+                      <ParentPaper>
+                        <SpaceBetweenGrid marginBottom={1}>
+                          <KPITitleTypography>Pressure</KPITitleTypography>
+                          <TypographyHealthKitAndDate>
+                            Weather data
+                          </TypographyHealthKitAndDate>
+                        </SpaceBetweenGrid>
+                        <SpaceBetweenGrid marginBottom={1}>
+                          <KPITypography color={"blue"}>Hourly</KPITypography>
+                        </SpaceBetweenGrid>
+                        <HighchartsReact
+                          highcharts={Highcharts}
+                          options={chartOptions(
+                            pressureValues.reverse(),
+                            "#13aaf8",
+                            "column",
+                            "hPa"
+                          )}
+                        />
+                      </ParentPaper>
+                    </Grid>
+                    <Grid item>
+                      <ParentPaper>
+                        <SpaceBetweenGrid marginBottom={1}>
+                          <KPITitleTypography>Humidity</KPITitleTypography>
+                          <TypographyHealthKitAndDate>
+                            Weather data
+                          </TypographyHealthKitAndDate>
+                        </SpaceBetweenGrid>
+                        <SpaceBetweenGrid marginBottom={1}>
+                          <KPITypography color={"blue"}>Hourly</KPITypography>
+                        </SpaceBetweenGrid>
+                        <HighchartsReact
+                          highcharts={Highcharts}
+                          options={chartOptions(
+                            humidityValues.reverse(),
+                            "#13aaf8",
+                            "column",
+                            "%"
+                          )}
+                        />
+                      </ParentPaper>
+                    </Grid>
                   </Grid>
                 </Grid>
               </>
