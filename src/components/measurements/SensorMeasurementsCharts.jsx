@@ -16,6 +16,7 @@ import {
 } from "styledComponentsAPI/Component";
 import NoDataToDisplay from "highcharts/modules/no-data-to-display";
 import { Sidebar } from "components/sidebar/Sidebar";
+import { format } from "date-fns";
 
 export const SensorMeasurementsCharts = (props) => {
   const location = useLocation();
@@ -45,7 +46,7 @@ export const SensorMeasurementsCharts = (props) => {
     const getUuidFromParams = new URLSearchParams(location.search);
     const sensorUUID = getUuidFromParams.get("sensorUUID");
 
-    const fetchLastWeekMeasurements = async () => {
+    const fetchLastHoursMeasurements = async () => {
       try {
         const dataArr = [];
         for (const type of measurementsTypes) {
@@ -97,7 +98,7 @@ export const SensorMeasurementsCharts = (props) => {
       }
     };
 
-    fetchLastWeekMeasurements();
+    fetchLastHoursMeasurements();
   }, []);
 
   if (typeof Highcharts === "object") {
@@ -166,22 +167,30 @@ export const SensorMeasurementsCharts = (props) => {
   });
 
   const pm25Values = pm25.map((obj) => obj.value);
+  const pm25Timestamp = pm25.map((obj) => obj.instantTime.seconds);
   const pm10Values = pm10.map((obj) => obj.value);
+  const pm10Timestamp = pm10.map((obj) => obj.instantTime.seconds);
   const no2Values = no2.map((obj) => obj.value);
+  const no2Timestamp = no2.map((obj) => obj.instantTime.seconds);
   const o3Values = o3.map((obj) => obj.value);
+  const o3Timestamp = o3.map((obj) => obj.instantTime.seconds);
   const so2Values = so2.map((obj) => obj.value);
+  const so2Timestamp = so2.map((obj) => obj.instantTime.seconds);
   const tempValues = temp.map((obj) => obj.value);
+  const tempTimestamp = temp.map((obj) => obj.instantTime.seconds);
   const pressureValues = pressure.map((obj) => obj.value);
+  const pressureTimestamp = pressure.map((obj) => obj.instantTime.seconds);
   const humidityValues = humidity.map((obj) => obj.value);
+  const humidityTimestamp = humidity.map((obj) => obj.instantTime.seconds);
 
-  /*  const lastDateTimestamp = (seconds) => {
-    return (
-      <Typography sx={{ fontSize: 12 }} fontWeight={"bold"}>
-        {seconds ? format(new Date(seconds * 1000), "d MMMM yyyy") : "-"}
-      </Typography>
-    );
-  }; */
+  const lastDateTimestamp = (seconds) =>
+    format(new Date(seconds * 1000), "d MMMM yyyy HH:mm");
 
+  /* 
+  console.log(
+    "lastDateTimestamp for pm25",
+    format(new Date(pm25Timestamp[0] * 1000), "d MMMM yyyy")
+  ); */
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
@@ -219,7 +228,9 @@ export const SensorMeasurementsCharts = (props) => {
                         </SpaceBetweenGrid>
                         <SpaceBetweenGrid marginBottom={1}>
                           <KPITypography color={"blue"}>Hourly</KPITypography>
-                          <TypographyHealthKitAndDate></TypographyHealthKitAndDate>
+                          <TypographyHealthKitAndDate>
+                            {lastDateTimestamp(pm25Timestamp[0])}
+                          </TypographyHealthKitAndDate>
                         </SpaceBetweenGrid>
                         <HighchartsReact
                           highcharts={Highcharts}
@@ -242,7 +253,9 @@ export const SensorMeasurementsCharts = (props) => {
                         </SpaceBetweenGrid>
                         <SpaceBetweenGrid marginBottom={1}>
                           <KPITypography color={"blue"}>Hourly</KPITypography>
-                          <TypographyHealthKitAndDate></TypographyHealthKitAndDate>
+                          <TypographyHealthKitAndDate>
+                            {lastDateTimestamp(pm10Timestamp[0])}
+                          </TypographyHealthKitAndDate>
                         </SpaceBetweenGrid>
                         <HighchartsReact
                           highcharts={Highcharts}
@@ -274,7 +287,9 @@ export const SensorMeasurementsCharts = (props) => {
                         </SpaceBetweenGrid>
                         <SpaceBetweenGrid marginBottom={1}>
                           <KPITypography color={"blue"}>Hourly</KPITypography>
-                          <TypographyHealthKitAndDate></TypographyHealthKitAndDate>
+                          <TypographyHealthKitAndDate>
+                            {lastDateTimestamp(no2Timestamp[0])}
+                          </TypographyHealthKitAndDate>
                         </SpaceBetweenGrid>
                         <HighchartsReact
                           highcharts={Highcharts}
@@ -297,7 +312,9 @@ export const SensorMeasurementsCharts = (props) => {
                         </SpaceBetweenGrid>
                         <SpaceBetweenGrid marginBottom={1}>
                           <KPITypography color={"blue"}>Hourly</KPITypography>
-                          <TypographyHealthKitAndDate></TypographyHealthKitAndDate>
+                          <TypographyHealthKitAndDate>
+                            {lastDateTimestamp(o3Timestamp[0])}
+                          </TypographyHealthKitAndDate>
                         </SpaceBetweenGrid>
                         <HighchartsReact
                           highcharts={Highcharts}
@@ -320,6 +337,9 @@ export const SensorMeasurementsCharts = (props) => {
                         </SpaceBetweenGrid>
                         <SpaceBetweenGrid marginBottom={1}>
                           <KPITypography color={"blue"}>Hourly</KPITypography>
+                          <TypographyHealthKitAndDate>
+                            {lastDateTimestamp(so2Timestamp[0])}
+                          </TypographyHealthKitAndDate>
                         </SpaceBetweenGrid>
                         <HighchartsReact
                           highcharts={Highcharts}
@@ -351,6 +371,9 @@ export const SensorMeasurementsCharts = (props) => {
                         </SpaceBetweenGrid>
                         <SpaceBetweenGrid marginBottom={1}>
                           <KPITypography color={"blue"}>Hourly</KPITypography>
+                          <TypographyHealthKitAndDate>
+                            {lastDateTimestamp(tempTimestamp[0])}
+                          </TypographyHealthKitAndDate>
                         </SpaceBetweenGrid>
                         <HighchartsReact
                           highcharts={Highcharts}
@@ -373,6 +396,9 @@ export const SensorMeasurementsCharts = (props) => {
                         </SpaceBetweenGrid>
                         <SpaceBetweenGrid marginBottom={1}>
                           <KPITypography color={"blue"}>Hourly</KPITypography>
+                          <TypographyHealthKitAndDate>
+                            {lastDateTimestamp(pressureTimestamp[0])}
+                          </TypographyHealthKitAndDate>
                         </SpaceBetweenGrid>
                         <HighchartsReact
                           highcharts={Highcharts}
@@ -395,6 +421,9 @@ export const SensorMeasurementsCharts = (props) => {
                         </SpaceBetweenGrid>
                         <SpaceBetweenGrid marginBottom={1}>
                           <KPITypography color={"blue"}>Hourly</KPITypography>
+                          <TypographyHealthKitAndDate>
+                            {lastDateTimestamp(humidityTimestamp[0])}
+                          </TypographyHealthKitAndDate>
                         </SpaceBetweenGrid>
                         <HighchartsReact
                           highcharts={Highcharts}
@@ -411,16 +440,16 @@ export const SensorMeasurementsCharts = (props) => {
                 </Grid>
               </>
             )}
-            {/*  {lastWeekMeasurements.map((timestamp) => (
-      <Typography sx={{ fontSize: 12 }} fontWeight={"bold"}>
-        {timestamp.instantTime.seconds
-          ? format(
-              new Date(timestamp.instantTime.seconds * 1000),
-              "d MMMM yyyy"
-            )
-          : ""}
-      </Typography>
-    ))} */}
+            {/*   {lastWeekMeasurements.map((timestamp) => (
+              <Typography sx={{ fontSize: 12 }} fontWeight={"bold"}>
+                {timestamp.instantTime.seconds
+                  ? format(
+                      new Date(timestamp.instantTime.seconds * 1000),
+                      "d MMMM yyyy"
+                    )
+                  : ""}
+              </Typography>
+            ))} */}
           </RowDirectionFormGrid>
         </Container>
       </div>

@@ -10,6 +10,7 @@ export const UpdateForm = (props) => {
           sx={{
             marginTop: 1,
             fontWeight: "bold",
+            color: props.color,
           }}
         >
           {props.title}

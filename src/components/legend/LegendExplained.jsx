@@ -72,12 +72,20 @@ export const LegendExplained = () => {
             </Card>
             <Card sx={{ mt: 3 }}>
               <CardContent>
-                <UpdateForm title={"Extremely poor"} content={<Grid></Grid>} />
+                <UpdateForm
+                  color={"#7d2181"}
+                  title={"Extremely poor"}
+                  content={<Grid></Grid>}
+                />
               </CardContent>
             </Card>
             <Card sx={{ mt: 3 }}>
               <CardContent>
-                <UpdateForm title={"No data"} content={<Grid></Grid>} />
+                <UpdateForm
+                  color={"#6f6f6f"}
+                  title={"No data"}
+                  content={<Grid></Grid>}
+                />
               </CardContent>
             </Card>
           </Box>

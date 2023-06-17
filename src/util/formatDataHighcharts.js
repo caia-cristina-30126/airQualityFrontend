@@ -7,6 +7,6 @@ export const formatData = (data, color) =>
     }
     return {
       y: item,
-      color: index === data.length - 1 ? color : lighten(color, 0.4),
+      color: index === data.length - 1 ? color : lighten(color, 0.6),
     };
   });
