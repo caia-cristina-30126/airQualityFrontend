@@ -183,14 +183,10 @@ export const SensorMeasurementsCharts = (props) => {
   const humidityValues = humidity.map((obj) => obj.value);
   const humidityTimestamp = humidity.map((obj) => obj.instantTime.seconds);
 
-  const lastDateTimestamp = (seconds) =>
-    format(new Date(seconds * 1000), "d MMMM yyyy HH:mm");
+  const lastDateTimestamp = (seconds) => {
+    return format(new Date(seconds * 1000), "d MMMM yyyy HH:mm");
+  };
 
-  /* 
-  console.log(
-    "lastDateTimestamp for pm25",
-    format(new Date(pm25Timestamp[0] * 1000), "d MMMM yyyy")
-  ); */
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
@@ -229,7 +225,9 @@ export const SensorMeasurementsCharts = (props) => {
                         <SpaceBetweenGrid marginBottom={1}>
                           <KPITypography color={"blue"}>Hourly</KPITypography>
                           <TypographyHealthKitAndDate>
-                            {lastDateTimestamp(pm25Timestamp[0])}
+                            {pm25Timestamp.length > 0
+                              ? lastDateTimestamp(pm25Timestamp[0])
+                              : "-"}
                           </TypographyHealthKitAndDate>
                         </SpaceBetweenGrid>
                         <HighchartsReact
@@ -254,7 +252,9 @@ export const SensorMeasurementsCharts = (props) => {
                         <SpaceBetweenGrid marginBottom={1}>
                           <KPITypography color={"blue"}>Hourly</KPITypography>
                           <TypographyHealthKitAndDate>
-                            {lastDateTimestamp(pm10Timestamp[0])}
+                            {pm10Timestamp.length > 0
+                              ? lastDateTimestamp(pm10Timestamp[0])
+                              : "-"}
                           </TypographyHealthKitAndDate>
                         </SpaceBetweenGrid>
                         <HighchartsReact
@@ -288,7 +288,9 @@ export const SensorMeasurementsCharts = (props) => {
                         <SpaceBetweenGrid marginBottom={1}>
                           <KPITypography color={"blue"}>Hourly</KPITypography>
                           <TypographyHealthKitAndDate>
-                            {lastDateTimestamp(no2Timestamp[0])}
+                            {no2Timestamp.length > 0
+                              ? lastDateTimestamp(no2Timestamp[0])
+                              : "-"}
                           </TypographyHealthKitAndDate>
                         </SpaceBetweenGrid>
                         <HighchartsReact
@@ -313,7 +315,9 @@ export const SensorMeasurementsCharts = (props) => {
                         <SpaceBetweenGrid marginBottom={1}>
                           <KPITypography color={"blue"}>Hourly</KPITypography>
                           <TypographyHealthKitAndDate>
-                            {lastDateTimestamp(o3Timestamp[0])}
+                            {o3Timestamp.length > 0
+                              ? lastDateTimestamp(o3Timestamp[0])
+                              : "-"}
                           </TypographyHealthKitAndDate>
                         </SpaceBetweenGrid>
                         <HighchartsReact
@@ -338,7 +342,9 @@ export const SensorMeasurementsCharts = (props) => {
                         <SpaceBetweenGrid marginBottom={1}>
                           <KPITypography color={"blue"}>Hourly</KPITypography>
                           <TypographyHealthKitAndDate>
-                            {lastDateTimestamp(so2Timestamp[0])}
+                            {so2Timestamp.length > 0
+                              ? lastDateTimestamp(so2Timestamp[0])
+                              : "-"}
                           </TypographyHealthKitAndDate>
                         </SpaceBetweenGrid>
                         <HighchartsReact
@@ -372,7 +378,9 @@ export const SensorMeasurementsCharts = (props) => {
                         <SpaceBetweenGrid marginBottom={1}>
                           <KPITypography color={"blue"}>Hourly</KPITypography>
                           <TypographyHealthKitAndDate>
-                            {lastDateTimestamp(tempTimestamp[0])}
+                            {tempTimestamp.length > 0
+                              ? lastDateTimestamp(tempTimestamp[0])
+                              : "-"}
                           </TypographyHealthKitAndDate>
                         </SpaceBetweenGrid>
                         <HighchartsReact
@@ -397,7 +405,9 @@ export const SensorMeasurementsCharts = (props) => {
                         <SpaceBetweenGrid marginBottom={1}>
                           <KPITypography color={"blue"}>Hourly</KPITypography>
                           <TypographyHealthKitAndDate>
-                            {lastDateTimestamp(pressureTimestamp[0])}
+                            {pressureTimestamp.length > 0
+                              ? lastDateTimestamp(pressureTimestamp[0])
+                              : "-"}
                           </TypographyHealthKitAndDate>
                         </SpaceBetweenGrid>
                         <HighchartsReact
@@ -422,7 +432,9 @@ export const SensorMeasurementsCharts = (props) => {
                         <SpaceBetweenGrid marginBottom={1}>
                           <KPITypography color={"blue"}>Hourly</KPITypography>
                           <TypographyHealthKitAndDate>
-                            {lastDateTimestamp(humidityTimestamp[0])}
+                            {humidityTimestamp.length > 0
+                              ? lastDateTimestamp(humidityTimestamp[0])
+                              : "-"}
                           </TypographyHealthKitAndDate>
                         </SpaceBetweenGrid>
                         <HighchartsReact

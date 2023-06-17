@@ -41,7 +41,7 @@ const SeverityPillRoot = styled("span")(({ theme, ownerState }) => {
     paddingRight: theme.spacing(1),
     textTransform: "uppercase",
     // whiteSpace: "nowrap",
-    minHeight: "40px",
+    minHeight: "20px",
   };
 });
 

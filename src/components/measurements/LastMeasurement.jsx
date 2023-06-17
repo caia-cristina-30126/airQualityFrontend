@@ -1,32 +1,30 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import {
   RowDirectionFormGrid,
   StyledPaper,
+  TypographyHealthKitAndDate,
 } from "styledComponentsAPI/Component";
 import CircularProgress from "@mui/material/CircularProgress";
+import { format } from "date-fns";
 
 export const LastMeasurement = (props) => {
-  const [measurementValue, setMeasurementValue] = useState("");
-  const [measurementUnit, setMeasurementUnit] = useState("");
+  const [measurements, setMeasurements] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const valuesArray = [];
   useEffect(() => {
     const fetchLastMeasurementByType = () => {
       axios
-        .get("http://localhost:8080/api/sensor/measurement/last", {
+        .get("http://localhost:8080/api/sensor/measurement/latestTimestamp", {
           headers: {
             sensorUUID: props.sensorUUID,
-            measurementType: props.measurementType,
           },
         })
         .then((response) => {
-          console.log("pollutants caqi", response.data.value);
-          setMeasurementValue(response.data.value);
-
-          valuesArray.push(response.data.value);
-          setMeasurementUnit(processUnit(response.data.unit));
+          console.log("last hourly measurements", response.data);
+          setMeasurements(response.data);
+          // valuesArray.push(response.data.value);
+          // setMeasurementUnit(processUnit(response.data.unit));
           setIsLoading(false);
         })
         .catch((error) => {
@@ -41,31 +39,78 @@ export const LastMeasurement = (props) => {
   return (
     <>
       {isLoading ? (
-        <CircularProgress size={40} />
+        <Grid
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress size={40} />
+        </Grid>
       ) : (
         <>
-          {measurementValue && measurementUnit ? (
+          {measurements ? (
             <>
-              <StyledPaper elevation={4} sx={{ backgroundColor: "#15aefa" }}>
-                <>
-                  <Typography
-                    fontWeight={"bold"}
-                    textAlign={"center"}
-                    fontSize={16}
+              <Typography
+                sx={{
+                  fontFamily: '"Nunito Sans",sans-serif',
+                  fontWeight: 700,
+                  fontSize: 15,
+                  lineHeight: "18px",
+                  color: "#a2a8af",
+                  mb: 0.5,
+                }}
+                textAlign={"center"}
+              >
+                {measurements[0].instantTime
+                  ? format(
+                      new Date(measurements[0].instantTime.seconds * 1000),
+                      "d MMMM yyyy hh:mm aa"
+                    )
+                  : ""}
+              </Typography>
+              <RowDirectionFormGrid>
+                {measurements.map((measurement) => (
+                  <StyledPaper
+                    elevation={4}
+                    sx={{ backgroundColor: "#15aefa" }}
                   >
-                    {props.measurementType.toUpperCase()}
-                  </Typography>
-                  <RowDirectionFormGrid sx={{ columnGap: 1 }}>
-                    <Typography fontSize={17}>{measurementValue}</Typography>
-                    <Typography fontSize={14} sx={{ alignSelf: "end" }}>
-                      {measurementUnit}
-                    </Typography>
-                  </RowDirectionFormGrid>
-                </>
-              </StyledPaper>
+                    <>
+                      <Typography
+                        fontWeight={"bold"}
+                        textAlign={"center"}
+                        fontSize={16}
+                      >
+                        {measurement.type.toUpperCase()}
+                      </Typography>
+                      <RowDirectionFormGrid sx={{ columnGap: 1 }}>
+                        <Typography fontSize={17}>
+                          {measurement.value}
+                        </Typography>
+                        <Typography fontSize={14} sx={{ alignSelf: "end" }}>
+                          {processUnit(measurement.unit)}
+                        </Typography>
+                      </RowDirectionFormGrid>
+                    </>
+                  </StyledPaper>
+                ))}
+              </RowDirectionFormGrid>
             </>
           ) : (
-            <></>
+            <Typography
+              sx={{
+                fontFamily: '"Nunito Sans",sans-serif',
+                fontWeight: 700,
+                fontSize: 15,
+                lineHeight: "18px",
+                color: "#a2a8af",
+                mb: 0.5,
+              }}
+              textAlign={"center"}
+            >
+              No measurements data
+            </Typography>
           )}
         </>
       )}

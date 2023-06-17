@@ -104,9 +104,7 @@ const SimpleMap = () => {
     });
   }, []);
   const handleLegendClick = () => navigate("/legendExplanations");
-  const pollutants = ["PM25", "PM10"];
-  const airlyData = ["NO2", "O3", "SO2"];
-  const weatherData = ["temp", "humidity", "pressure"];
+
   const navigate = useNavigate();
   const handleClick = (uuid) =>
     navigate(`/map/measurementsChart?sensorUUID=${uuid}`);
@@ -187,37 +185,16 @@ const SimpleMap = () => {
                         </RowDirectionFormGrid>
                         <AirIndexQuality
                           sensorUUID={activeMarker.uuid}
-                          measurementType={"temp"}
+                          measurementType={"PM10"}
                         />
                         <Divider />
                         <CategoryTypography variant="h6" sx={{ my: 1 }}>
                           Measurements data
                         </CategoryTypography>
-                        <RowDirectionFormGrid>
-                          {pollutants.map((pollutant) => (
-                            <LastMeasurement
-                              sensorUUID={activeMarker.uuid}
-                              measurementType={pollutant}
-                            />
-                          ))}
-                        </RowDirectionFormGrid>
-                        <RowDirectionFormGrid>
-                          {airlyData.map((data) => (
-                            <LastMeasurement
-                              sensorUUID={activeMarker.uuid}
-                              measurementType={data}
-                            />
-                          ))}
-                        </RowDirectionFormGrid>
-                        <RowDirectionFormGrid>
-                          {weatherData.map((weather) => (
-                            <LastMeasurement
-                              sensorUUID={activeMarker.uuid}
-                              measurementType={weather}
-                              usage={"weather"}
-                            />
-                          ))}
-                        </RowDirectionFormGrid>
+                        <Grid sx={{ maxWidth: "350px" }}>
+                          <LastMeasurement sensorUUID={activeMarker.uuid} />
+                        </Grid>
+
                         <Grid
                           sx={{ display: "flex", justifyContent: "center" }}
                         >

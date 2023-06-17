@@ -56,30 +56,45 @@ export const AirIndexQuality = (props) => {
   return (
     <Grid sx={{ p: 1 }}>
       {isLoading ? (
-        <CircularProgress size={20} />
+        <Grid
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress size={20} />
+        </Grid>
       ) : (
         <>
           <RowDirectionFormGrid
-            sx={{ display: "flex", justifyContent: "center", mb: 0.5 }}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+
+              columnGap: 1.5,
+            }}
           >
             <SeverityPill color={feedback}> {feedback} </SeverityPill>
-          </RowDirectionFormGrid>
-
-          <RowDirectionFormGrid sx={{ justifyContent: "space-between" }}>
-            <Typography
-              sx={{ fontSize: 14 }}
-              textAlign={"center"}
-              fontWeight={"bold"}
-            >
+            <Typography sx={{ fontSize: 14 }} fontWeight={"bold"}>
               {aqi}
             </Typography>
-
-            <Typography sx={{ fontSize: 14 }} fontWeight={"bold"}>
-              {timestamp
-                ? format(new Date(timestamp * 1000), "d MMMM yyyy hh:mm aa")
-                : ""}
-            </Typography>
           </RowDirectionFormGrid>
+          <Typography
+            sx={{
+              fontFamily: '"Nunito Sans",sans-serif',
+              fontWeight: 700,
+              fontSize: 15,
+              lineHeight: "18px",
+              color: "#a2a8af",
+              my: 0.5,
+            }}
+            textAlign={"center"}
+          >
+            {timestamp
+              ? format(new Date(timestamp * 1000), "d MMMM yyyy hh:mm aa")
+              : ""}
+          </Typography>
         </>
       )}
     </Grid>
@@ -92,14 +107,15 @@ const processAQI = (aqiValue, aqiType) => {
     !isFinite(aqiValue) ||
     aqiType === ""
   ) {
-    return (
-      <Typography variant="h6">Insufficient data for measuring AQI</Typography>
-    );
+    return <></>;
   } else {
     return (
-      <>
-        {aqiValue} based on {aqiType}
-      </>
+      <Grid>
+        <Typography fontSize={17} fontWeight={"bold"}>
+          {aqiValue}
+        </Typography>
+        ( based on {aqiType} )
+      </Grid>
     );
   }
 };

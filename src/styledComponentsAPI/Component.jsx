@@ -41,7 +41,7 @@ export const KPITitleTypography = styled(Typography)(({ theme }) => ({
 
 export const TypographyHealthKitAndDate = styled(Typography)(() => ({
   fontFamily: '"Nunito Sans",sans-serif',
-  fontWeight: 400,
+  fontWeight: 700,
   fontSize: 13,
   lineHeight: "18px",
   color: "#a2a8af",
