@@ -26,7 +26,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { generateMarkerIcon } from "util/generateMarkerIcon";
+import { iconMarker } from "util/generateMarkerIcon";
 import {
   RowDirectionFormGrid,
   CategoryTypography,
@@ -150,7 +150,7 @@ const SimpleMap = () => {
                   onClick={() => handleMarkerClick(sensor)}
                   icon={{
                     url: `data:image/svg+xml;charset=utf-8;base64,${btoa(
-                      generateMarkerIcon("green")
+                      iconMarker("#0281f2")
                     )}`,
                     scaledSize: new window.google.maps.Size(32, 32),
                   }}
@@ -194,7 +194,6 @@ const SimpleMap = () => {
                         <Grid sx={{ maxWidth: "350px" }}>
                           <LastMeasurement sensorUUID={activeMarker.uuid} />
                         </Grid>
-
                         <Grid
                           sx={{ display: "flex", justifyContent: "center" }}
                         >
@@ -221,10 +220,32 @@ const SimpleMap = () => {
                           padding: 1,
                         }}
                       >
-                        <Typography variant="subtitle1">
-                          {activeMarker.name}
+                        <RowDirectionFormGrid sx={{ justifyContent: "start" }}>
+                          <LocationOnIcon
+                            fontSize="medium"
+                            sx={{ color: "#0387f3", mt: 0.5 }}
+                          />
+                          <Typography
+                            variant="h6"
+                            fontWeight={"bold"}
+                            sx={{ alignSelf: "center" }}
+                          >
+                            {activeMarker.name}
+                          </Typography>
+                        </RowDirectionFormGrid>
+                        <Typography
+                          sx={{
+                            fontFamily: '"Nunito Sans",sans-serif',
+                            fontWeight: 700,
+                            fontSize: 15,
+                            lineHeight: "18px",
+                            color: "#a2a8af",
+                            mt: 0.5,
+                          }}
+                          textAlign={"center"}
+                        >
+                          This sensor is inactive
                         </Typography>
-                        <Typography>This sensor is inactive</Typography>
                       </Grid>
                     )}
                   </InfoWindow>

@@ -133,8 +133,8 @@ const UpdateSensorForm = ({ uuid }) => {
 
   return (
     <Container maxWidth="xl">
-      <Typography variant="h4" sx={{ mb: 3 }}>
-        {sensorData.name} details
+      <Typography variant="h4" sx={{ mb: 3 }} fontWeight={"bold"}>
+        Sensor details
       </Typography>
       <Card sx={{ p: 2, backgroundColor: "#f5f5f0" }}>
         <CardContent>

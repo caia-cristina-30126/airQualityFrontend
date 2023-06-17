@@ -120,14 +120,14 @@ const processAQI = (aqiValue, aqiType) => {
   }
 };
 
-const intervalUpperBoundsByType = {
+export const intervalUpperBoundsByType = {
   PM25: [10, 20, 25, 50, 75, 800],
   PM10: [20, 40, 50, 100, 150, 1200],
   NO2: [40, 90, 120, 230, 340, 1000],
   O3: [50, 100, 130, 240, 380, 800],
   SO2: [100, 200, 350, 500, 750, 1250],
 };
-const feedbackTable = [
+export const feedbackTable = [
   "Good",
   "Fair",
   "Moderate",
@@ -136,7 +136,7 @@ const feedbackTable = [
   "Extremely poor",
 ];
 
-const feedbackAQI = (value, type) => {
+export const feedbackAQI = (value, type) => {
   const intervalUpperBounds = intervalUpperBoundsByType[type];
 
   if (intervalUpperBounds) {

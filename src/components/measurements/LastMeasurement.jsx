@@ -35,7 +35,7 @@ export const LastMeasurement = (props) => {
 
     fetchLastMeasurementByType();
   }, []);
-
+  console.log("measurements", measurements);
   return (
     <>
       {isLoading ? (
@@ -50,7 +50,7 @@ export const LastMeasurement = (props) => {
         </Grid>
       ) : (
         <>
-          {measurements ? (
+          {measurements && measurements.length > 0 ? (
             <>
               <Typography
                 sx={{
@@ -63,7 +63,7 @@ export const LastMeasurement = (props) => {
                 }}
                 textAlign={"center"}
               >
-                {measurements[0].instantTime
+                {measurements[0]
                   ? format(
                       new Date(measurements[0].instantTime.seconds * 1000),
                       "d MMMM yyyy hh:mm aa"

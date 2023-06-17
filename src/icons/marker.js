@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
 
-const SeverityPillRoot = styled("span")(({ theme, ownerState }) => {
+const CircleRoot = styled("div")(({ theme, ownerState }) => {
   let backgroundColor;
   let color = "#000000";
 
@@ -24,38 +24,32 @@ const SeverityPillRoot = styled("span")(({ theme, ownerState }) => {
   return {
     alignItems: "center",
     backgroundColor,
-    borderRadius: 12,
+    borderRadius: "50%",
     color,
     cursor: "default",
-    display: "inline-flex",
-    flexGrow: 0,
-    flexShrink: 0,
+    display: "flex",
     fontFamily: theme.typography.fontFamily,
-    fontSize: theme.typography.pxToRem(12),
-    lineHeight: 2,
-    fontWeight: 700,
+    fontSize: theme.typography.pxToRem(16),
+    fontWeight: 600,
     justifyContent: "center",
-    letterSpacing: 0.5,
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-    textTransform: "uppercase",
-    minHeight: "20px",
+    height: ownerState.size,
+    width: ownerState.size,
   };
 });
 
-export const SeverityPill = (props) => {
+export const Circle = (props) => {
   const { color = "primary", children, ...other } = props;
 
   const ownerState = { color };
 
   return (
-    <SeverityPillRoot ownerState={ownerState} {...other}>
+    <CircleRoot ownerState={ownerState} {...other}>
       {children}
-    </SeverityPillRoot>
+    </CircleRoot>
   );
 };
 
-SeverityPill.propTypes = {
+Circle.propTypes = {
   children: PropTypes.node,
   color: PropTypes.oneOf([
     "primary",
@@ -71,4 +65,5 @@ SeverityPill.propTypes = {
     "Very poor",
     "Extremely poor",
   ]),
+  size: PropTypes.number,
 };

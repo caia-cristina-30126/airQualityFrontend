@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Paper, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useLocation } from "react-router-dom";
 import { HighchartsReact } from "highcharts-react-official";
@@ -18,7 +18,7 @@ import NoDataToDisplay from "highcharts/modules/no-data-to-display";
 import { Sidebar } from "components/sidebar/Sidebar";
 import { format } from "date-fns";
 
-export const SensorMeasurementsCharts = (props) => {
+export const SensorMeasurementsCharts = () => {
   const location = useLocation();
   const [pm25, setPM25] = useState([]);
   const [pm10, setPM10] = useState([]);
@@ -40,12 +40,27 @@ export const SensorMeasurementsCharts = (props) => {
   ];
   const [isLoading, setIsLoading] = useState(true);
   const [chartData, setChartData] = useState([]);
+  const [sensorData, setSensorData] = useState("");
 
   const pollutantsUnit = "µg/m³";
   useEffect(() => {
     const getUuidFromParams = new URLSearchParams(location.search);
     const sensorUUID = getUuidFromParams.get("sensorUUID");
+    const fetchSensor = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/getSensorByUUID`,
+          {
+            headers: { UUID: sensorUUID },
+          }
+        );
+        setSensorData(response.data.name);
+      } catch (error) {
+        console.error("Error fetching sensor:", error);
+      }
+    };
 
+    fetchSensor();
     const fetchLastHoursMeasurements = async () => {
       try {
         const dataArr = [];
@@ -191,14 +206,36 @@ export const SensorMeasurementsCharts = (props) => {
     <div style={{ display: "flex" }}>
       <Sidebar />
       <div style={{ flexGrow: 1, marginTop: "40px" }}>
-        <Typography
-          variant="h4"
-          fontWeight={"bold"}
-          textAlign={"center"}
-          sx={{ mb: 5 }}
-        >
-          Measurements charts
+        <Typography variant="h4" fontWeight={"bold"} sx={{ mb: 5, ml: 8 }}>
+          Measurements charts for {sensorData} sensor
         </Typography>
+        <Box
+          position="absolute"
+          top={40}
+          right={20}
+          padding={1.5}
+          component={Paper}
+          elevation={3}
+          bgcolor="rgba(255, 255, 255, 0.8)"
+        >
+          <Grid sx={{ width: "150px" }}>
+            <Typography
+              variant="h4"
+              fontWeight={"bold"}
+              sx={{
+                fontFamily: '"Nunito Sans",sans-serif',
+                fontWeight: 700,
+                fontSize: 18,
+
+                textAlign: "center",
+              }}
+            >
+              The recorded measurements cover the previous 12-hour period,
+              starting from the date and time displyed.
+            </Typography>
+          </Grid>
+        </Box>
+
         <Container maxWidth="xl">
           <RowDirectionFormGrid sx={{ justifyContent: "center", p: 3 }}>
             {isLoading ? (
@@ -234,7 +271,7 @@ export const SensorMeasurementsCharts = (props) => {
                           highcharts={Highcharts}
                           options={chartOptions(
                             pm25Values.reverse(),
-                            "#8a011f",
+                            "#EE12E6",
                             "line",
                             pollutantsUnit
                           )}
@@ -297,7 +334,7 @@ export const SensorMeasurementsCharts = (props) => {
                           highcharts={Highcharts}
                           options={chartOptions(
                             no2Values.reverse(),
-                            "#66d751",
+                            "#CA4166",
                             "line",
                             pollutantsUnit
                           )}
@@ -324,7 +361,7 @@ export const SensorMeasurementsCharts = (props) => {
                           highcharts={Highcharts}
                           options={chartOptions(
                             o3Values.reverse(),
-                            "#66d751",
+                            "#fe0000",
                             "line",
                             pollutantsUnit
                           )}
@@ -351,7 +388,7 @@ export const SensorMeasurementsCharts = (props) => {
                           highcharts={Highcharts}
                           options={chartOptions(
                             so2Values.reverse(),
-                            "#66d751",
+                            "#5637BC",
                             "line",
                             pollutantsUnit
                           )}
@@ -387,7 +424,7 @@ export const SensorMeasurementsCharts = (props) => {
                           highcharts={Highcharts}
                           options={chartOptions(
                             tempValues.reverse(),
-                            "#13aaf8",
+                            "#29EE12",
                             "column",
                             "°C"
                           )}
@@ -441,7 +478,7 @@ export const SensorMeasurementsCharts = (props) => {
                           highcharts={Highcharts}
                           options={chartOptions(
                             humidityValues.reverse(),
-                            "#13aaf8",
+                            "#5637BC",
                             "column",
                             "%"
                           )}

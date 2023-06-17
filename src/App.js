@@ -47,7 +47,6 @@ export const App = () => {
           path={`map/measurementsChart`}
           element={<SensorMeasurementsCharts />}
         />
-        <Route path="/home" element={<HomePage />} />
         <Route path="/sensors" element={<SensorsTableContent />} />
         <Route path={`sensors/sensorDetails`} element={<SensorDetailsPage />} />
         <Route path="/addSensor" element={<AddSensorContentPage />} />
