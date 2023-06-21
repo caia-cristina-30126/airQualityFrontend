@@ -4,12 +4,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "components/firebaseConfig";
 import {
   Button,
-  FormControl,
   Grid,
-  InputLabel,
-  MenuItem,
   Paper,
-  Select,
   Snackbar,
   TextField,
   Typography,
@@ -34,7 +30,6 @@ const RegisterForm = () => {
       lastName: "",
       email: "",
       password: "",
-      role: "",
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email format").required("Required"),
@@ -130,18 +125,7 @@ const RegisterForm = () => {
               helperText={formik.touched.password && formik.errors.password}
               InputLabelProps={{ shrink: true }}
             />
-            <FormControl required>
-              <InputLabel>Role permissions</InputLabel>
-              <Select
-                name="role"
-                value={formik.values.role}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              >
-                <MenuItem value="admin">Admin</MenuItem>
-                <MenuItem value="viewer">Viewer</MenuItem>
-              </Select>
-            </FormControl>
+
             <Button
               fullWidth
               type="submit"

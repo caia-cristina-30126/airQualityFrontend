@@ -1,4 +1,4 @@
-import { Container, Typography } from "@mui/material";
+import { Container, Grid, Paper, Typography } from "@mui/material";
 import { Sidebar } from "components/sidebar/Sidebar";
 import React from "react";
 import PaperFeedback from "./PaperFeedback";
@@ -90,6 +90,40 @@ export const LegendExplained = () => {
             />
           </RowDirectionFormGrid>
           <AQITable />
+
+          <Grid sx={{ display: "flex", justifyContent: "center" }}>
+            <Paper
+              sx={{ width: "500px", mt: 2, p: 1, backgroundColor: "#f5f5f5" }}
+            >
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: "bold",
+                  color: "#0386f4",
+                  textAlign: "center",
+                  fontSize: 23,
+                  marginBottom: 1,
+                }}
+              >
+                Performing the AQI
+              </Typography>
+              <Typography
+                sx={{
+                  fontWeight: 700,
+                  fontSize: 18,
+                  lineHeight: "18px",
+                  textAlign: "center",
+                }}
+              >
+                The air quality index is determined by selecting the highest
+                value among the measured parameters, which include PM2.5, PM10,
+                NO2, SO2, and O3. However, it is mandatory to include the values
+                of PM10 and NO2 in the calculation. The index represents the
+                maximum value obtained from these parameters, indicating the
+                overall air quality.
+              </Typography>
+            </Paper>
+          </Grid>
         </Container>
       </div>
     </div>

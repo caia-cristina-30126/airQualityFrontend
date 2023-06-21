@@ -51,13 +51,12 @@ export const AccountGeneralSettings = (props) => {
 
   console.log("user data", userData);
   const handleSubmit = async (values) => {
-    const { email, firstName, lastName, role } = values;
+    const { email, firstName, lastName } = values;
 
     const userData = {
       email: email,
       firstName: firstName,
       lastName: lastName,
-      role: role,
     };
 
     try {
@@ -87,7 +86,6 @@ export const AccountGeneralSettings = (props) => {
                 email: userData.email,
                 firstName: userData.firstName,
                 lastName: userData.lastName,
-                role: userData.role,
               }}
               onSubmit={handleSubmit}
             >
