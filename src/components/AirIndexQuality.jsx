@@ -23,6 +23,7 @@ export const AirIndexQuality = (props) => {
         .then((response) => {
           console.log("aiq with type object ", response.data);
           setAqi(processAQI(response.data.value, response.data.type));
+
           setFeedback(feedbackAQI(response.data.value, response.data.type));
           setIsLoading(false);
         })

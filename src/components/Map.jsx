@@ -185,7 +185,7 @@ const SimpleMap = () => {
                         </RowDirectionFormGrid>
                         <AirIndexQuality
                           sensorUUID={activeMarker.uuid}
-                          measurementType={"PM10"}
+                          measurementType={"PM25"}
                         />
                         <Divider />
                         <CategoryTypography variant="h6" sx={{ my: 1 }}>

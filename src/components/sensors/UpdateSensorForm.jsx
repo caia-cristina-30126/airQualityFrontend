@@ -251,7 +251,7 @@ const UpdateSensorForm = ({ uuid }) => {
                       textAlign={"center"}
                       sx={{ my: 4 }}
                     >
-                      Update the types of measurements for the sensor
+                      Types of measurements for the sensor
                     </Typography>
                     <FieldArray name="measurementsType">
                       {({ remove, push }) => (
@@ -283,6 +283,7 @@ const UpdateSensorForm = ({ uuid }) => {
                                   }}
                                   name={`measurementsType.${index}`}
                                   value={type}
+                                  disabled
                                 />
                               }
                               label={type}

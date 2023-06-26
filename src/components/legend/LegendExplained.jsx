@@ -84,7 +84,7 @@ export const LegendExplained = () => {
               content={
                 <>
                   Data is insufficient. The minimum required pollutants for
-                  performing AQI are: PM10 and NO2.
+                  performing AQI are: PM2.5 and NO2.
                 </>
               }
             />
@@ -118,7 +118,7 @@ export const LegendExplained = () => {
                 The air quality index is determined by selecting the highest
                 value among the measured parameters, which include PM2.5, PM10,
                 NO2, SO2, and O3. However, it is mandatory to include the values
-                of PM10 and NO2 in the calculation. The index represents the
+                of PM2.5 and NO2 in the calculation. The index represents the
                 maximum value obtained from these parameters, indicating the
                 overall air quality.
               </Typography>

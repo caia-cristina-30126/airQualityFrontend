@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
 import { Paper, Typography } from "@mui/material";
 import { DivContentBody } from "styledComponentsAPI/Component";
 import background from "./auth/background.jpg";
