@@ -91,7 +91,7 @@ export const LegendExplained = () => {
           </RowDirectionFormGrid>
           <AQITable />
 
-          <Grid sx={{ display: "flex", justifyContent: "center" }}>
+          <Grid sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
             <Paper
               sx={{ width: "500px", mt: 2, p: 1, backgroundColor: "#f5f5f5" }}
             >
