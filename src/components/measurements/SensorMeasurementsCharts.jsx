@@ -149,6 +149,7 @@ export const SensorMeasurementsCharts = () => {
       title: {
         text: unit,
       },
+      offset: 10,
     },
 
     legend: {
