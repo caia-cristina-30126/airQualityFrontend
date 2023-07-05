@@ -490,16 +490,6 @@ export const SensorMeasurementsCharts = () => {
                 </Grid>
               </>
             )}
-            {/*   {lastWeekMeasurements.map((timestamp) => (
-              <Typography sx={{ fontSize: 12 }} fontWeight={"bold"}>
-                {timestamp.instantTime.seconds
-                  ? format(
-                      new Date(timestamp.instantTime.seconds * 1000),
-                      "d MMMM yyyy"
-                    )
-                  : ""}
-              </Typography>
-            ))} */}
           </RowDirectionFormGrid>
         </Container>
       </div>

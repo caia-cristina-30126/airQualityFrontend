@@ -8,7 +8,6 @@ import {
   TableRow,
   Paper,
   Tooltip,
-  Typography,
 } from "@mui/material";
 
 const AQITable = () => {

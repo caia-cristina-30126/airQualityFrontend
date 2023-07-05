@@ -4,10 +4,7 @@ import { AccountGeneralSettings } from "./AccountGeneralSettings";
 import { Sidebar } from "components/sidebar/Sidebar";
 
 export const Account = () => {
-  const tabs = [
-    { label: "General", value: "general" },
-    //  { label: "Permissions", value: "permissions" },
-  ];
+  const tabs = [{ label: "General", value: "general" }];
 
   const [currentTab, setCurrentTab] = useState("general");
 

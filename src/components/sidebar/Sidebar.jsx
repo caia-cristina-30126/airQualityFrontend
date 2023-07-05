@@ -231,46 +231,6 @@ export const Sidebar = () => {
         >
           <MenuIcon />
         </IconButton>
-
-        {/*   <Grid sx={{ display: "flex", justifyContent: "end" }}>
-            <IconButton
-              size="large"
-              onClick={handleMenu}
-              color="inherit"
-              sx={{ display: "flex", justifyContent: "end" }}
-            >
-              <AccountCircleIcon />
-            </IconButton>
-          </Grid> 
-        <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem
-              onClick={handleAccountButton}
-              sx={{ color: "black", fontWeight: 700 }}
-            >
-              Account
-            </MenuItem>
-            <MenuItem
-              onClick={handleSignOut}
-              sx={{ color: "darkred", fontWeight: 700 }}
-            >
-              Log out
-            </MenuItem>
-          </Menu> */}
-        {/*  </Toolbar> */}
       </AppBar>
       <Box
         component="nav"

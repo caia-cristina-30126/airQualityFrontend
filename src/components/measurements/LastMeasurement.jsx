@@ -4,7 +4,6 @@ import { Grid, Typography } from "@mui/material";
 import {
   RowDirectionFormGrid,
   StyledPaper,
-  TypographyHealthKitAndDate,
 } from "styledComponentsAPI/Component";
 import CircularProgress from "@mui/material/CircularProgress";
 import { format } from "date-fns";
